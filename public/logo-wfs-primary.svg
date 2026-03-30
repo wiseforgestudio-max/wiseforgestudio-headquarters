@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 840" role="img" aria-label="Logo principal WiseForgeStudio">
+  <defs>
+    <linearGradient id="wf-grad" x1="116" y1="90" x2="728" y2="756" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#22c55e"/>
+      <stop offset="0.52" stop-color="#0f9f6e"/>
+      <stop offset="1" stop-color="#0b5d46"/>
+    </linearGradient>
+  </defs>
+  <rect width="840" height="840" rx="120" fill="#f4fbf7"/>
+  <path d="M420 130 630 228v188c0 142-86 225-210 287C296 641 210 558 210 416V228z" fill="url(#wf-grad)"/>
+  <path d="M286 310 357 469 420 351 485 469 554 310" fill="none" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="42"/>
+  <path d="M420 216 453 267l60 8-43 43 10 61-60-31-59 31 10-61-44-43 60-8z" fill="#d8ffe7"/>
+  <path d="M370 558h100" fill="none" stroke="#d8ffe7" stroke-linecap="round" stroke-width="28"/>
+  <text x="420" y="760" text-anchor="middle" fill="#123126" font-family="Segoe UI, Arial, sans-serif" font-size="84" font-weight="800" letter-spacing="-1">WiseForgeStudio</text>
+</svg>

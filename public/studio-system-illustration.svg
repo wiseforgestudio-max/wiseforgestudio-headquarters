@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420" role="img" aria-label="Ilustración de equipo desarrollando un sistema digital">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f5fbf6"/>
+      <stop offset="1" stop-color="#edf7ef"/>
+    </linearGradient>
+    <linearGradient id="greenGlow" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1fa75f"/>
+      <stop offset="1" stop-color="#81cf8d"/>
+    </linearGradient>
+    <linearGradient id="blueGlow" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#9dd8ff"/>
+      <stop offset="1" stop-color="#d7efff"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="720" height="420" rx="32" fill="url(#bg)"/>
+  <circle cx="560" cy="82" r="52" fill="#dff3e4"/>
+  <circle cx="600" cy="286" r="68" fill="#e5f2ff"/>
+
+  <rect x="80" y="92" width="292" height="188" rx="24" fill="#ffffff" stroke="#d7dee9" stroke-width="3"/>
+  <rect x="98" y="112" width="256" height="18" rx="9" fill="#eef2f8"/>
+  <rect x="98" y="152" width="150" height="74" rx="18" fill="#f5fbf6" stroke="#dbe9df" stroke-width="2"/>
+  <rect x="264" y="152" width="90" height="74" rx="18" fill="#f8f9fc" stroke="#e1e6ef" stroke-width="2"/>
+  <rect x="98" y="242" width="256" height="18" rx="9" fill="#eef2f8"/>
+
+  <path d="M142 188c18-32 67-33 87 0" fill="none" stroke="#1fa75f" stroke-linecap="round" stroke-width="9"/>
+  <path d="M168 198h37" fill="none" stroke="#18212f" stroke-linecap="round" stroke-width="9"/>
+  <path d="M293 170v38M274 190h38" stroke="#0a66ff" stroke-linecap="round" stroke-width="10"/>
+
+  <rect x="418" y="64" width="202" height="112" rx="26" fill="#18212f"/>
+  <rect x="438" y="86" width="92" height="14" rx="7" fill="#2e4159"/>
+  <rect x="438" y="114" width="126" height="14" rx="7" fill="#2e4159"/>
+  <rect x="438" y="142" width="104" height="14" rx="7" fill="#2e4159"/>
+  <circle cx="578" cy="120" r="24" fill="url(#greenGlow)"/>
+  <path d="M565 121l8 8 17-20" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="7"/>
+
+  <rect x="424" y="214" width="222" height="130" rx="30" fill="#ffffff" stroke="#d7dee9" stroke-width="3"/>
+  <rect x="446" y="238" width="78" height="16" rx="8" fill="#eef2f8"/>
+  <rect x="446" y="272" width="178" height="18" rx="9" fill="#edf7ef"/>
+  <rect x="446" y="304" width="140" height="18" rx="9" fill="#eef2f8"/>
+  <circle cx="593" cy="272" r="18" fill="url(#blueGlow)"/>
+  <path d="M581 272h24" stroke="#0a66ff" stroke-linecap="round" stroke-width="6"/>
+  <path d="M593 260v24" stroke="#0a66ff" stroke-linecap="round" stroke-width="6"/>
+
+  <circle cx="172" cy="346" r="28" fill="#18212f"/>
+  <circle cx="252" cy="346" r="28" fill="#1fa75f"/>
+  <rect x="146" y="374" width="54" height="12" rx="6" fill="#dbe3ee"/>
+  <rect x="226" y="374" width="54" height="12" rx="6" fill="#dbe3ee"/>
+  <path d="M199 346h25M280 346h24" stroke="#9eb0c3" stroke-linecap="round" stroke-width="6"/>
+
+  <path d="M372 172c28 0 41-44 74-44M372 250c33 0 47 32 74 32" fill="none" stroke="#1fa75f" stroke-linecap="round" stroke-width="5"/>
+  <circle cx="372" cy="172" r="9" fill="#1fa75f"/>
+  <circle cx="372" cy="250" r="9" fill="#0a66ff"/>
+  <circle cx="446" cy="128" r="8" fill="#1fa75f"/>
+  <circle cx="446" cy="282" r="8" fill="#0a66ff"/>
+</svg>

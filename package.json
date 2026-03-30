@@ -1,0 +1,17 @@
+{
+  "name": "wiseforgestudio-headquarters",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Local-first multi-agent headquarters for software organizations.",
+  "scripts": {
+    "start": "node src/server.mjs",
+    "dev": "node --watch src/server.mjs",
+    "test": "node tests/run-tests.mjs",
+    "doctor": "powershell -ExecutionPolicy Bypass -File .\\scripts\\doctor.ps1",
+    "start:windows": "powershell -ExecutionPolicy Bypass -File .\\scripts\\start-headquarters.ps1"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

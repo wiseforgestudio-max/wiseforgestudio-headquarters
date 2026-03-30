@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 180" role="img" aria-label="Logo horizontal GanaMaxcol">
+  <defs>
+    <linearGradient id="gmTile" x1="22" y1="20" x2="144" y2="144" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff6ea"/>
+      <stop offset="1" stop-color="#efd7b3"/>
+    </linearGradient>
+    <linearGradient id="gmHorn" x1="44" y1="40" x2="118" y2="76" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffd18e"/>
+      <stop offset="1" stop-color="#ef9b61"/>
+    </linearGradient>
+    <linearGradient id="gmFace" x1="48" y1="58" x2="120" y2="136" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#f7fbff"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="12" y="16" width="140" height="140" rx="38" fill="url(#gmTile)"/>
+
+  <path d="M52 66c-11-13-11-28-4-40 14 3 26 12 34 26" fill="url(#gmHorn)"/>
+  <path d="M112 66c11-13 11-28 4-40-14 3-26 12-34 26" fill="url(#gmHorn)"/>
+
+  <path d="M82 56c-24 0-44 20-44 44v4c0 28 20 48 44 48s44-20 44-48v-4c0-24-20-44-44-44Z" fill="url(#gmFace)"/>
+  <path d="M66 78c-8-8-19-13-31-16 4 12 10 21 20 28" fill="#1b8f4e"/>
+  <path d="M98 78c8-8 19-13 31-16-4 12-10 21-20 28" fill="#1b8f4e"/>
+  <circle cx="62" cy="92" r="6.5" fill="#20262d"/>
+  <circle cx="102" cy="92" r="6.5" fill="#20262d"/>
+  <path d="M54 108c0-14 12-24 28-24s28 10 28 24v10c0 13-12 22-28 22s-28-9-28-22Z" fill="#ffd6cf"/>
+  <ellipse cx="72" cy="112" rx="5" ry="6.5" fill="#7b4a44"/>
+  <ellipse cx="92" cy="112" rx="5" ry="6.5" fill="#7b4a44"/>
+  <path d="M70 126c6 5 18 5 24 0" fill="none" stroke="#7b4a44" stroke-linecap="round" stroke-width="4.5"/>
+
+  <text x="182" y="82" fill="#173223" font-family="Segoe UI, Arial, sans-serif" font-size="50" font-weight="800" letter-spacing="-1.1">GanaMaxcol</text>
+  <text x="184" y="118" fill="#d48642" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="800" letter-spacing="3">OPERACIÓN GANADERA</text>
+</svg>
