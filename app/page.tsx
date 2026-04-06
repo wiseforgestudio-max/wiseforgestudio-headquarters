@@ -11,7 +11,7 @@ import {
   useScroll,
   useInView,
   AnimatePresence,
-} from 'framer-motion'
+} from 'motion/react'
 import {
   ArrowRight,
   ArrowDown,
