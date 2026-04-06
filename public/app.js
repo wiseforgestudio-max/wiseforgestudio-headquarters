@@ -287,37 +287,37 @@ function buildIllustrationSvg(kind, index) {
 
   const palettes = {
     systems: {
-      bgA: "#f5fbf7",
-      bgB: "#ffffff",
-      frame: "#d6e8dd",
-      card: "#f8fcf9",
-      ink: "#163326",
-      accent: "#148d52",
-      accentSoft: "#dff4e7",
-      support: "#0f9ea8",
-      warm: "#97b53d"
+      bgA: "#16161f",
+      bgB: "#111118",
+      frame: "rgba(255,255,255,0.08)",
+      card: "#1e1e28",
+      ink: "#f0f0f5",
+      accent: "#34d874",
+      accentSoft: "rgba(52,216,116,0.12)",
+      support: "#22d3ee",
+      warm: "#f59e0b"
     },
     method: {
-      bgA: "#f8fbf8",
-      bgB: "#ffffff",
-      frame: "#dce7de",
-      card: "#fbfdfb",
-      ink: "#1a2a20",
-      accent: "#0c6d3f",
-      accentSoft: "#e6f2e9",
-      support: "#5bb78d",
-      warm: "#c6d78d"
+      bgA: "#16161f",
+      bgB: "#111118",
+      frame: "rgba(255,255,255,0.06)",
+      card: "#1c1c26",
+      ink: "#e0e0f0",
+      accent: "#34d874",
+      accentSoft: "rgba(52,216,116,0.1)",
+      support: "#7c3aed",
+      warm: "#22d3ee"
     },
     methodVertical: {
-      bgA: "#f8fbf8",
-      bgB: "#ffffff",
-      frame: "#dce7de",
-      card: "#fbfdfb",
-      ink: "#1a2a20",
-      accent: "#0c6d3f",
-      accentSoft: "#e6f2e9",
-      support: "#5bb78d",
-      warm: "#c6d78d"
+      bgA: "#16161f",
+      bgB: "#111118",
+      frame: "rgba(255,255,255,0.06)",
+      card: "#1c1c26",
+      ink: "#e0e0f0",
+      accent: "#34d874",
+      accentSoft: "rgba(52,216,116,0.1)",
+      support: "#7c3aed",
+      warm: "#22d3ee"
     }
   };
 
@@ -487,6 +487,14 @@ window.addEventListener("resize", debounce(updateActiveSection, 150));
 
 updateScrollProgress();
 updateActiveSection();
+
+// Header glow on scroll
+const siteHeader = document.querySelector(".site-header");
+function updateHeaderState() {
+  siteHeader?.classList.toggle("is-scrolled", window.scrollY > 40);
+}
+window.addEventListener("scroll", updateHeaderState, { passive: true });
+updateHeaderState();
 setupReveal();
 setupProductInteractions();
 setupIllustrationGalleries();
@@ -507,8 +515,8 @@ function setupContactForm() {
     try {
       const res = await fetch(form.action, {
         method: "POST",
-        body: new FormData(form),
-        headers: { "Accept": "application/json" }
+        body: JSON.stringify(Object.fromEntries(new FormData(form))),
+        headers: { "Accept": "application/json", "Content-Type": "application/json" }
       });
       if (res.ok) {
         form.reset();

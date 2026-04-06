@@ -183,7 +183,8 @@ function renderOfficeSvg(state) {
   `;
 }
 
-export function renderHomePage(state) {
+export function renderHomePage(state, renderOptions = {}) {
+  const isReadonly = renderOptions.readonly === true;
   const summary = state.derived.executiveSummary;
   const cards = [
     ["Proyectos", summary.activeProjects],
@@ -194,6 +195,11 @@ export function renderHomePage(state) {
     ["Sesiones", summary.activeSessions]
   ];
 
+  const statusBannerClass = isReadonly ? "readonly" : "ok";
+  const statusText = isReadonly
+    ? "Vista pública — modo lectura. Los datos se actualizan con cada deploy."
+    : "Headquarters cargado correctamente desde el servidor local.";
+
   return `<!doctype html>
 <html lang="es">
   <head>
@@ -201,6 +207,7 @@ export function renderHomePage(state) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>${escapeHtml(state.meta.productName)}</title>
     <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/hq.css">
   </head>
   <body>
     <div class="shell">
@@ -211,11 +218,11 @@ export function renderHomePage(state) {
         </div>
         <div class="topbar-meta">
           <span id="phase-pill" class="pill">${escapeHtml(state.meta.phase)}</span>
-          <span class="pill accent">Local primero</span>
+          <span class="pill accent">${isReadonly ? "Solo lectura" : "Local primero"}</span>
         </div>
       </header>
 
-      <div id="app-status" class="app-status ok">Headquarters cargado correctamente desde el servidor local.</div>
+      <div id="app-status" class="app-status ${statusBannerClass}">${escapeHtml(statusText)}</div>
 
       <main class="layout">
         <section class="panel executive-panel">
