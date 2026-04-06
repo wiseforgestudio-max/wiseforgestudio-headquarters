@@ -1,14 +1,16 @@
 import { NextResponse } from 'next/server'
 import { join } from 'path'
-import { createRequire } from 'module'
 
 export async function GET() {
   try {
     // Dynamic imports for ESM modules in Next.js
     const dataDir = join(process.cwd(), 'data')
-    const { FileStateStore } = await import('@/src/utils/fs-store.mjs' as any)
-    const { HeadquartersService } = await import('@/src/services/headquarters-service.mjs' as any)
-    const { renderHomePage } = await import('@/src/services/render-html.mjs' as any)
+    // @ts-ignore — .mjs ESM modules without type declarations
+    const { FileStateStore } = await import('@/src/utils/fs-store.mjs')
+    // @ts-ignore
+    const { HeadquartersService } = await import('@/src/services/headquarters-service.mjs')
+    // @ts-ignore
+    const { renderHomePage } = await import('@/src/services/render-html.mjs')
 
     const store = new FileStateStore(dataDir)
     const service = new HeadquartersService(store)
