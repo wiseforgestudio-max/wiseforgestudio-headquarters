@@ -8,7 +8,6 @@ import {
   useMotionValue,
   useTransform,
   useSpring,
-  useScroll,
   useInView,
   AnimatePresence,
 } from 'motion/react'
@@ -22,9 +21,10 @@ import {
   Cpu,
   GitMerge,
   LayoutDashboard,
-  ChevronRight,
   Mail,
   ExternalLink,
+  Layers,
+  Zap,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -37,7 +37,7 @@ const HeroScene = dynamic(() => import('@/components/3d/hero-scene'), {
   ),
 })
 
-/* ── Utilities ───────────────────────────────────────────────── */
+/* ── Animation variants ─────────────────────────────────────── */
 const fadeUp = {
   hidden: { opacity: 0, y: 32 },
   visible: (i = 0) => ({
@@ -51,23 +51,22 @@ const fadeUp = {
   }),
 }
 
+/* ── Tilt hook ──────────────────────────────────────────────── */
 function useTilt() {
   const x = useMotionValue(0)
   const y = useMotionValue(0)
-  const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [8, -8]), { stiffness: 200, damping: 25 })
-  const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-8, 8]), { stiffness: 200, damping: 25 })
-
+  const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [5, -5]), { stiffness: 200, damping: 25 })
+  const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-5, 5]), { stiffness: 200, damping: 25 })
   function onMouseMove(e: React.MouseEvent<HTMLDivElement>) {
     const rect = e.currentTarget.getBoundingClientRect()
     x.set((e.clientX - rect.left) / rect.width - 0.5)
     y.set((e.clientY - rect.top) / rect.height - 0.5)
   }
   function onMouseLeave() { x.set(0); y.set(0) }
-
   return { rotateX, rotateY, onMouseMove, onMouseLeave }
 }
 
-/* ── Navbar ──────────────────────────────────────────────────── */
+/* ── Navbar ─────────────────────────────────────────────────── */
 const NAV_LINKS = [
   { label: 'Productos', href: '#productos' },
   { label: 'Capacidades', href: '#capacidades' },
@@ -78,7 +77,6 @@ const NAV_LINKS = [
 function Navbar() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 48)
     window.addEventListener('scroll', fn, { passive: true })
@@ -96,45 +94,34 @@ function Navbar() {
       )}
     >
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        {/* Logo */}
-        <a href="#" className="flex items-center gap-2.5 group">
-          <div className="w-7 h-7 rounded-md bg-brand/10 border border-brand/30 flex items-center justify-center">
-            <div className="w-3 h-3 rounded-sm bg-brand" />
-          </div>
-          <span className="font-display font-700 text-[15px] tracking-tight text-ink">
-            WiseForge <span className="text-ink-muted font-400">Studio</span>
+        <a href="#" className="flex items-center gap-2.5">
+          <Image src="/logo-wfs.png" alt="WiseForge Studio" width={28} height={28} className="rounded-md" />
+          <span className="font-display font-bold text-[15px] tracking-tight text-ink">
+            WiseForge <span className="text-ink-muted font-normal">Studio</span>
           </span>
         </a>
 
-        {/* Desktop links */}
         <nav className="hidden md:flex items-center gap-7">
           {NAV_LINKS.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              className="text-[13px] text-ink-muted hover:text-ink transition-colors font-medium"
-            >
+            <a key={l.href} href={l.href} className="text-[13px] text-ink-muted hover:text-ink transition-colors font-medium">
               {l.label}
             </a>
           ))}
         </nav>
 
-        {/* CTA */}
         <div className="hidden md:flex items-center gap-3">
           <a href="#contacto">
-            <button className="h-8 px-4 rounded-lg bg-brand text-bg-base text-[13px] font-semibold hover:bg-brand/90 transition-colors">
+            <button className="h-9 px-5 rounded-xl bg-brand text-bg-base text-[13px] font-bold hover:bg-brand/90 transition-all shadow-[0_0_20px_rgba(52,216,116,0.25)]">
               Contactar
             </button>
           </a>
         </div>
 
-        {/* Mobile toggle */}
         <button className="md:hidden text-ink-muted" onClick={() => setOpen((v) => !v)}>
           {open ? <X size={20} /> : <Menu size={20} />}
         </button>
       </div>
 
-      {/* Mobile menu */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -144,12 +131,7 @@ function Navbar() {
             className="md:hidden glass border-b border-border px-6 pb-5"
           >
             {NAV_LINKS.map((l) => (
-              <a
-                key={l.href}
-                href={l.href}
-                onClick={() => setOpen(false)}
-                className="block py-3 text-[14px] text-ink-muted hover:text-ink border-b border-border last:border-0"
-              >
+              <a key={l.href} href={l.href} onClick={() => setOpen(false)} className="block py-3 text-[14px] text-ink-muted hover:text-ink border-b border-border last:border-0">
                 {l.label}
               </a>
             ))}
@@ -160,10 +142,9 @@ function Navbar() {
   )
 }
 
-/* ── Cursor spotlight ─────────────────────────────────────────── */
+/* ── Cursor spotlight ───────────────────────────────────────── */
 function CursorSpotlight() {
   const ref = useRef<HTMLDivElement>(null)
-
   useEffect(() => {
     const move = (e: MouseEvent) => {
       if (!ref.current) return
@@ -173,58 +154,45 @@ function CursorSpotlight() {
     window.addEventListener('mousemove', move, { passive: true })
     return () => window.removeEventListener('mousemove', move)
   }, [])
-
-  return (
-    <div
-      ref={ref}
-      className="spotlight-cursor pointer-events-none fixed inset-0 z-[1]"
-      aria-hidden
-    />
-  )
+  return <div ref={ref} className="spotlight-cursor pointer-events-none fixed inset-0 z-[1]" aria-hidden />
 }
 
-/* ── Hero ────────────────────────────────────────────────────── */
+/* ── Hero ───────────────────────────────────────────────────── */
 function HeroSection() {
   return (
-    <section className="relative h-screen flex items-center overflow-hidden scan-line">
-      {/* Full-screen 3D canvas */}
+    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden scan-line pt-16">
+      {/* Three.js 3D background */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 1.8, ease: 'easeOut' }}
+        transition={{ duration: 2, ease: 'easeOut' }}
         className="absolute inset-0"
       >
         <HeroScene />
       </motion.div>
 
-      {/* Gradient vignettes for text readability */}
-      <div className="absolute inset-0 hero-vignette-left pointer-events-none z-10" />
+      {/* Radial vignette */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_90%_70%_at_50%_50%,transparent_20%,rgba(5,5,8,0.88)_100%)] pointer-events-none z-10" />
       <div className="absolute inset-x-0 bottom-0 h-56 hero-vignette-bottom pointer-events-none z-10" />
-      <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-[#050508]/60 to-transparent pointer-events-none z-10" />
+      <div className="absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-[#050508]/90 to-transparent pointer-events-none z-10" />
 
-      {/* Content */}
-      <div className="relative z-20 max-w-7xl mx-auto px-6 pt-16 pb-20 w-full">
+      {/* Centered content */}
+      <div className="relative z-20 text-center px-6 max-w-5xl mx-auto w-full">
         {/* Badge */}
         <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          animate="visible"
-          custom={0}
-          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-brand/35 bg-brand/[0.07] backdrop-blur-sm mb-8"
+          variants={fadeUp} initial="hidden" animate="visible" custom={0}
+          className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-brand/35 bg-brand/[0.07] backdrop-blur-sm mb-10"
         >
-          <div className="w-1.5 h-1.5 rounded-full bg-brand animate-pulse" />
-          <span className="text-[12px] font-semibold text-brand tracking-widest uppercase">
-            Studio de software operativo
+          <span className="w-1.5 h-1.5 rounded-full bg-brand animate-pulse" />
+          <span className="text-[11px] font-bold text-brand tracking-[0.18em] uppercase">
+            Studio de software operativo · B2B
           </span>
         </motion.div>
 
-        {/* Headline */}
+        {/* Headline — mega */}
         <motion.h1
-          variants={fadeUp}
-          initial="hidden"
-          animate="visible"
-          custom={1}
-          className="font-display font-extrabold text-[clamp(3rem,7vw,6.2rem)] leading-[1.01] tracking-tight text-ink mb-8 max-w-4xl"
+          variants={fadeUp} initial="hidden" animate="visible" custom={1}
+          className="font-display font-extrabold text-[clamp(3rem,9vw,8rem)] leading-[0.91] tracking-[-0.02em] text-ink mb-8"
         >
           Software que
           <br />
@@ -235,11 +203,8 @@ function HeroSection() {
 
         {/* Subtitle */}
         <motion.p
-          variants={fadeUp}
-          initial="hidden"
-          animate="visible"
-          custom={2}
-          className="text-[16px] leading-[1.72] text-ink-muted max-w-[480px] mb-10"
+          variants={fadeUp} initial="hidden" animate="visible" custom={2}
+          className="text-[17px] leading-[1.75] text-ink-muted max-w-[520px] mx-auto mb-12"
         >
           Diseñamos soluciones para empresas que necesitan control, trazabilidad y
           una capa digital más seria. No piezas sueltas — sistemas completos.
@@ -247,62 +212,56 @@ function HeroSection() {
 
         {/* CTAs */}
         <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          animate="visible"
-          custom={3}
-          className="flex flex-wrap gap-4 mb-14"
+          variants={fadeUp} initial="hidden" animate="visible" custom={3}
+          className="flex flex-wrap gap-4 justify-center mb-20"
         >
           <a href="#productos">
-            <button className="group h-12 px-8 rounded-xl bg-brand text-bg-base font-semibold text-[15px] flex items-center gap-2 hover:bg-brand/90 transition-all hover:gap-3 shadow-[0_0_30px_rgba(52,216,116,0.25)]">
-              Ver productos <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+            <button className="group h-14 px-10 rounded-2xl bg-brand text-bg-base font-bold text-[15px] flex items-center gap-2.5 hover:bg-brand/90 transition-all shadow-[0_0_50px_rgba(52,216,116,0.35)] hover:shadow-[0_0_70px_rgba(52,216,116,0.45)]">
+              Ver productos <ArrowRight size={17} className="transition-transform group-hover:translate-x-1" />
             </button>
           </a>
           <a href="#contacto">
-            <button className="h-12 px-8 rounded-xl border border-border/60 bg-bg-surface/30 backdrop-blur-sm text-ink text-[15px] font-medium hover:border-border-strong hover:bg-bg-surface/50 transition-all">
+            <button className="h-14 px-10 rounded-2xl border border-white/20 bg-white/[0.05] backdrop-blur-sm text-ink text-[15px] font-semibold hover:border-white/35 hover:bg-white/[0.09] transition-all">
               Contactar estudio
             </button>
           </a>
         </motion.div>
 
-        {/* Stats */}
+        {/* Stats strip */}
         <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          animate="visible"
-          custom={4}
-          className="flex gap-10 pt-8 border-t border-border/40 max-w-xs"
+          variants={fadeUp} initial="hidden" animate="visible" custom={4}
+          className="flex flex-wrap items-center justify-center gap-x-12 gap-y-6 pt-8 border-t border-white/[0.07]"
         >
           {[
             { n: '2', label: 'Productos en mercado' },
-            { n: '100%', label: 'Local-first' },
-            { n: '0→1', label: 'Desde cero' },
+            { n: '4', label: 'Líneas de servicio' },
+            { n: '0→1', label: 'Discovery a producción' },
+            { n: 'B2B', label: 'Foco exclusivo' },
           ].map((s) => (
-            <div key={s.label}>
-              <div className="font-display text-3xl font-extrabold text-ink">{s.n}</div>
-              <div className="text-[11px] text-ink-muted mt-1 leading-snug">{s.label}</div>
+            <div key={s.label} className="text-center">
+              <div className="font-display text-[2.2rem] font-extrabold text-ink leading-none">{s.n}</div>
+              <div className="text-[11px] text-ink-dim mt-1.5 font-medium tracking-wide uppercase">{s.label}</div>
             </div>
           ))}
         </motion.div>
       </div>
 
-      {/* Floating badges — repositioned to right side */}
+      {/* Floating badges */}
       <motion.div
-        animate={{ y: [0, -8, 0] }}
-        transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute top-32 right-8 lg:right-20 glass rounded-xl px-4 py-2.5 border border-brand/20 z-20"
+        animate={{ y: [0, -10, 0] }}
+        transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
+        className="absolute top-28 right-8 lg:right-24 glass rounded-2xl px-5 py-3.5 border border-brand/25 z-20 hidden lg:block"
       >
-        <p className="text-[11px] text-ink-muted font-medium">Fase activa</p>
-        <p className="text-[13px] font-semibold text-brand">HQ Bootstrap</p>
+        <p className="text-[10px] text-ink-dim font-semibold uppercase tracking-widest mb-1">Fase activa</p>
+        <p className="text-[14px] font-bold text-brand">HQ Bootstrap</p>
       </motion.div>
-
       <motion.div
-        animate={{ y: [0, 8, 0] }}
-        transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-        className="absolute bottom-28 right-8 lg:right-20 glass rounded-xl px-4 py-2.5 border border-border z-20"
+        animate={{ y: [0, 10, 0] }}
+        transition={{ duration: 5.5, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
+        className="absolute bottom-36 left-8 lg:left-24 glass rounded-2xl px-5 py-3.5 border border-border z-20 hidden lg:block"
       >
-        <p className="text-[11px] text-ink-muted font-medium">Agentes activos</p>
-        <p className="text-[13px] font-semibold text-ink">14 agentes</p>
+        <p className="text-[10px] text-ink-dim font-semibold uppercase tracking-widest mb-1">Productos</p>
+        <p className="text-[14px] font-bold text-ink">AssetMaster · GanaMaxcol</p>
       </motion.div>
 
       {/* Scroll indicator */}
@@ -317,130 +276,195 @@ function HeroSection() {
   )
 }
 
-/* ── Products ────────────────────────────────────────────────── */
+/* ── Products ───────────────────────────────────────────────── */
 const PRODUCTS = [
   {
     id: 'assetmaster',
     name: 'AssetMaster',
     tag: 'ERP Documental',
-    tagColor: 'text-accent border-accent/30 bg-accent/8',
+    tagColor: '#6366f1',
     description:
-      'Control documental con aprobaciones, trazabilidad de activos y flujos de trabajo estructurados. Para organizaciones que necesitan rigor operativo.',
-    features: ['Aprobaciones multi-nivel', 'Control de activos', 'Trazabilidad completa', 'Reportería ejecutiva'],
+      'Control documental con aprobaciones multi-nivel, trazabilidad de activos y flujos de trabajo estructurados. Para organizaciones que necesitan rigor operativo.',
+    features: [
+      'Aprobaciones multi-nivel',
+      'Control de activos',
+      'Trazabilidad completa',
+      'Reportería ejecutiva',
+      'Flujos configurables',
+      'Evidencia documental',
+    ],
     image: '/assetmaster-shot.png',
     logo: '/assetmaster-logo.svg',
-    glow: 'rgba(99,102,241,0.12)',
-    accent: '#6366f1',
+    href: 'https://assetwise-hub.vercel.app',
+    glow: '#6366f1',
   },
   {
     id: 'ganamaxcol',
     name: 'GanaMaxcol',
     tag: 'ERP Ganadero',
-    tagColor: 'text-brand border-brand/30 bg-brand/8',
+    tagColor: '#34d874',
     description:
-      'Software vertical para operación ganadera en campo. Salud animal, reproducción, pesajes y producción — diseñado para el trabajo real.',
-    features: ['Salud animal', 'Reproducción', 'Pesajes y producción', 'Alertas operativas'],
+      'Software vertical para operación ganadera en campo. Salud animal, reproducción, pesajes y producción — diseñado para el trabajo real en finca.',
+    features: [
+      'Salud animal',
+      'Reproducción',
+      'Pesajes y producción',
+      'Alertas operativas',
+      'Multifinca',
+      'Trazabilidad de campo',
+    ],
     image: '/ganamaxcol-shot.png',
     logo: '/ganamaxcol-logo.svg',
-    glow: 'rgba(52,216,116,0.12)',
-    accent: '#34d874',
+    href: 'https://ganamaxcol.vercel.app',
+    glow: '#34d874',
   },
 ]
 
-function ProductCard({ product, index }: { product: (typeof PRODUCTS)[0]; index: number }) {
-  const ref = useRef<HTMLDivElement>(null)
-  const inView = useInView(ref, { once: true, margin: '-80px' })
+function BrowserMockup({
+  image,
+  alt,
+  glow,
+  reverse,
+}: {
+  image: string
+  alt: string
+  glow: string
+  reverse?: boolean
+}) {
   const tilt = useTilt()
-
   return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 48 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94], delay: index * 0.15 }}
-      className="perspective"
-    >
+    <div className="perspective relative">
       <motion.div
         style={{ rotateX: tilt.rotateX, rotateY: tilt.rotateY, transformStyle: 'preserve-3d' }}
         onMouseMove={tilt.onMouseMove}
         onMouseLeave={tilt.onMouseLeave}
-        className="relative rounded-2xl border border-border bg-bg-surface overflow-hidden group cursor-default"
+        initial={{ opacity: 0, y: 24, rotateY: reverse ? 8 : -8 }}
+        whileInView={{ opacity: 1, y: 0, rotateY: reverse ? 4 : -4 }}
+        viewport={{ once: true, margin: '-80px' }}
+        transition={{ duration: 1.1, ease: [0.25, 0.46, 0.45, 0.94] }}
       >
-        {/* Glow */}
         <div
-          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
-          style={{ background: `radial-gradient(ellipse 60% 50% at 50% 0%, ${product.glow} 0%, transparent 70%)` }}
-        />
-
-        <div className="p-8 lg:p-10">
-          <div className="flex items-start justify-between mb-7">
-            <div>
-              <div
-                className={cn(
-                  'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-[11px] font-semibold tracking-wide uppercase mb-4',
-                  product.tagColor
-                )}
-              >
-                {product.tag}
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-lg border border-border flex items-center justify-center overflow-hidden bg-bg-muted">
-                  <Image src={product.logo} alt={product.name} width={24} height={24} />
-                </div>
-                <h3 className="font-display text-2xl font-700 text-ink">{product.name}</h3>
-              </div>
+          className="rounded-2xl overflow-hidden border border-white/[0.09]"
+          style={{ boxShadow: `0 40px 90px rgba(0,0,0,0.65), 0 0 0 1px rgba(255,255,255,0.05), 0 0 80px ${glow}18` }}
+        >
+          {/* Browser chrome */}
+          <div className="flex items-center gap-2 px-4 py-3.5 bg-[#0d0d1a] border-b border-white/[0.07]">
+            <span className="w-3 h-3 rounded-full bg-[#ff5f57]" />
+            <span className="w-3 h-3 rounded-full bg-[#febc2e]" />
+            <span className="w-3 h-3 rounded-full bg-[#28c840]" />
+            <div className="ml-3 flex-1 h-5 rounded-lg bg-white/[0.04] border border-white/[0.06] flex items-center px-3 gap-1.5">
+              <div className="w-2 h-2 rounded-full bg-white/20" />
+              <div className="h-2 rounded flex-1 bg-white/[0.06]" />
             </div>
           </div>
-
-          <p className="text-[14px] leading-[1.7] text-ink-muted mb-7 max-w-[420px]">{product.description}</p>
-
-          <ul className="grid grid-cols-2 gap-2 mb-8">
-            {product.features.map((f) => (
-              <li key={f} className="flex items-center gap-2 text-[13px] text-ink-muted">
-                <CheckCircle2 size={13} style={{ color: product.accent }} className="shrink-0" />
-                {f}
-              </li>
-            ))}
-          </ul>
-
-          {/* Product screenshot — 3D float effect */}
-          <div
-            className="relative rounded-xl overflow-hidden border border-border bg-bg-muted"
-            style={{ transform: 'translateZ(20px)' }}
-          >
-            <div
-              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-10"
-              style={{ background: `linear-gradient(to bottom, transparent 60%, ${product.glow} 100%)` }}
-            />
-            <Image
-              src={product.image}
-              alt={`${product.name} screenshot`}
-              width={680}
-              height={400}
-              className="w-full object-cover"
-            />
-          </div>
+          {/* Screenshot */}
+          <Image src={image} alt={alt} width={720} height={450} className="w-full object-cover" />
         </div>
+        {/* Glow reflection */}
+        <div
+          className="absolute -bottom-6 inset-x-10 h-10 blur-3xl opacity-35 rounded-full"
+          style={{ background: glow }}
+        />
       </motion.div>
+    </div>
+  )
+}
+
+function ProductItem({ product, index }: { product: (typeof PRODUCTS)[0]; index: number }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const inView = useInView(ref, { once: true, margin: '-80px' })
+  const reverse = index % 2 === 1
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 40 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] }}
+      className={cn(
+        'grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20 items-center',
+        reverse && 'lg:[&>div:first-child]:order-2'
+      )}
+    >
+      {/* Text side */}
+      <div>
+        <div
+          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border mb-7"
+          style={{ borderColor: `${product.tagColor}40`, background: `${product.tagColor}0e`, color: product.tagColor }}
+        >
+          <span className="text-[11px] font-bold tracking-[0.15em] uppercase">{product.tag}</span>
+        </div>
+
+        <div className="flex items-center gap-3 mb-5">
+          <div className="w-10 h-10 rounded-xl border border-white/[0.09] bg-white/[0.04] flex items-center justify-center overflow-hidden">
+            <Image src={product.logo} alt={product.name} width={26} height={26} />
+          </div>
+          <h3 className="font-display text-[2.4rem] font-extrabold text-ink tracking-tight leading-none">
+            {product.name}
+          </h3>
+        </div>
+
+        <p className="text-[15px] leading-[1.8] text-ink-muted mb-9 max-w-[400px]">
+          {product.description}
+        </p>
+
+        <ul className="grid grid-cols-2 gap-3 mb-10">
+          {product.features.map((f) => (
+            <li key={f} className="flex items-center gap-2.5 text-[13px] text-ink-muted">
+              <CheckCircle2 size={14} style={{ color: product.tagColor }} className="shrink-0" />
+              {f}
+            </li>
+          ))}
+        </ul>
+
+        <div className="flex gap-3">
+          <a href={product.href} target="_blank" rel="noopener noreferrer">
+            <button
+              className="group h-11 px-6 rounded-xl text-[14px] font-bold flex items-center gap-2 transition-all"
+              style={{
+                background: product.tagColor,
+                color: '#050508',
+                boxShadow: `0 0 30px ${product.tagColor}35`,
+              }}
+            >
+              Ver demo <ExternalLink size={14} />
+            </button>
+          </a>
+          <a href="#contacto">
+            <button className="h-11 px-6 rounded-xl border border-border text-[14px] text-ink-muted font-medium hover:border-border-strong hover:text-ink transition-all">
+              Solicitar acceso
+            </button>
+          </a>
+        </div>
+      </div>
+
+      {/* Browser mockup visual */}
+      <BrowserMockup
+        image={product.image}
+        alt={`${product.name} screenshot`}
+        glow={product.glow}
+        reverse={reverse}
+      />
     </motion.div>
   )
 }
 
 function ProductsSection() {
   const ref = useRef<HTMLDivElement>(null)
-  const inView = useInView(ref, { once: true, margin: '-60px' })
+  const inView = useInView(ref, { once: true, margin: '-80px' })
 
   return (
-    <section id="productos" className="py-28 relative overflow-hidden">
+    <section id="productos" className="py-36 relative overflow-hidden">
       <div className="absolute inset-0 bg-[#050508]" />
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border-strong to-transparent" />
+      <div className="absolute top-0 inset-x-0 h-px section-line" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">
-        <div ref={ref} className="max-w-xl mb-16">
+        {/* Heading */}
+        <div ref={ref} className="text-center max-w-2xl mx-auto mb-28">
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
-            className="text-[12px] font-semibold text-brand tracking-widest uppercase mb-3"
+            className="text-[11px] font-bold text-brand tracking-[0.2em] uppercase mb-3"
           >
             Productos
           </motion.p>
@@ -448,17 +472,25 @@ function ProductsSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.1 }}
-            className="font-display text-[clamp(2rem,4vw,3rem)] font-700 tracking-tight text-ink leading-[1.1]"
+            className="font-display text-[clamp(2.2rem,5vw,4rem)] font-extrabold tracking-tight text-ink leading-[1.0]"
           >
             Software que funciona
             <br />
-            <span className="text-ink-muted font-400">en el mundo real.</span>
+            <span className="gradient-text-alt">en el mundo real.</span>
           </motion.h2>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={inView ? { opacity: 1 } : {}}
+            transition={{ delay: 0.2 }}
+            className="mt-5 text-[15px] text-ink-muted leading-relaxed max-w-md mx-auto"
+          >
+            Dos sistemas con identidad propia, foco de mercado claro y arquitectura lista para crecer.
+          </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="space-y-36">
           {PRODUCTS.map((p, i) => (
-            <ProductCard key={p.id} product={p} index={i} />
+            <ProductItem key={p.id} product={p} index={i} />
           ))}
         </div>
       </div>
@@ -466,50 +498,102 @@ function ProductsSection() {
   )
 }
 
-/* ── Capabilities ────────────────────────────────────────────── */
+/* ── Capabilities ───────────────────────────────────────────── */
 const CAPABILITIES = [
   {
     icon: Boxes,
     title: 'Productos SaaS verticales',
-    desc: 'Construimos software específico para industrias con lógica propia. Sin plantillas genéricas.',
+    desc: 'Construimos software específico para industrias con lógica propia. Sin plantillas genéricas — sistemas diseñados desde la operación real con arquitectura lista para escalar.',
     color: '#6366f1',
+    large: true,
   },
   {
     icon: LayoutDashboard,
     title: 'Software operativo',
-    desc: 'Plataformas internas que reemplazan Excel y procesos manuales. Digitalizamos operaciones reales.',
+    desc: 'Plataformas que reemplazan Excel y procesos manuales. Digitalizamos la operación real.',
     color: '#34d874',
+    large: false,
   },
   {
     icon: GitMerge,
-    title: 'Consultoría de automatización',
-    desc: 'Integraciones, flujos y agentes que reducen trabajo repetitivo. Diagnosticamos, diseñamos y construimos.',
+    title: 'Automatización',
+    desc: 'Integraciones, flujos y agentes que reducen trabajo repetitivo con criterio operativo.',
     color: '#f59e0b',
+    large: false,
   },
   {
     icon: Cpu,
     title: 'Plataformas internas',
-    desc: 'Herramientas que amplifican equipos de operación. Governance, aprobaciones y trazabilidad.',
+    desc: 'Herramientas que amplifican equipos. Governance, aprobaciones y trazabilidad.',
     color: '#a78bfa',
+    large: false,
   },
 ]
+
+function CapabilityCard({ c, i, large }: { c: (typeof CAPABILITIES)[0]; i: number; large?: boolean }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const inView = useInView(ref, { once: true, margin: '-40px' })
+  const Icon = c.icon
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 32 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.7, delay: i * 0.1 }}
+      className={cn(
+        'group relative rounded-3xl border border-border bg-bg-surface overflow-hidden hover:border-border-strong transition-all duration-300',
+        large ? 'md:col-span-2 p-10 min-h-[260px] flex flex-col justify-between' : 'p-7'
+      )}
+    >
+      <div
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+        style={{ background: `radial-gradient(ellipse 70% 80% at ${large ? '15%' : '30%'} 30%, ${c.color}14 0%, transparent 70%)` }}
+      />
+      {large && (
+        <div
+          className="absolute -right-16 -bottom-16 w-64 h-64 rounded-full opacity-[0.05]"
+          style={{ background: c.color }}
+        />
+      )}
+
+      <div
+        className={cn('rounded-2xl border flex items-center justify-center relative', large ? 'w-14 h-14 mb-8' : 'w-11 h-11 mb-5')}
+        style={{ borderColor: `${c.color}35`, background: `${c.color}12` }}
+      >
+        <Icon size={large ? 24 : 20} style={{ color: c.color }} />
+      </div>
+
+      <div>
+        <h3 className={cn('font-display font-bold text-ink mb-2.5 leading-snug', large ? 'text-[1.4rem]' : 'text-[15px]')}>
+          {c.title}
+        </h3>
+        <p className={cn('text-ink-muted leading-[1.7]', large ? 'text-[14px] max-w-[380px]' : 'text-[13px]')}>
+          {c.desc}
+        </p>
+      </div>
+    </motion.div>
+  )
+}
 
 function CapabilitiesSection() {
   const ref = useRef<HTMLDivElement>(null)
   const inView = useInView(ref, { once: true, margin: '-60px' })
+  const statsRef = useRef<HTMLDivElement>(null)
+  const statsInView = useInView(statsRef, { once: true, margin: '-40px' })
 
   return (
-    <section id="capacidades" className="py-28 relative overflow-hidden">
+    <section id="capacidades" className="py-36 relative overflow-hidden">
       <div className="absolute inset-0 bg-bg-2" />
-      <div className="absolute inset-0 bg-grid opacity-50" />
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border-strong to-transparent" />
+      <div className="absolute inset-0 bg-grid opacity-40" />
+      <div className="absolute top-0 inset-x-0 h-px section-line" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">
-        <div ref={ref} className="text-center max-w-2xl mx-auto mb-16">
+        <div ref={ref} className="text-center max-w-xl mx-auto mb-16">
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
-            className="text-[12px] font-semibold text-brand tracking-widest uppercase mb-3"
+            className="text-[11px] font-bold text-brand tracking-[0.2em] uppercase mb-3"
           >
             Capacidades
           </motion.p>
@@ -517,9 +601,9 @@ function CapabilitiesSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.1 }}
-            className="font-display text-[clamp(1.8rem,3.5vw,2.8rem)] font-700 tracking-tight text-ink leading-[1.1]"
+            className="font-display text-[clamp(2rem,4.5vw,3.5rem)] font-extrabold tracking-tight text-ink leading-[1.0]"
           >
-            Lo que construimos
+            Lo que construimos.
           </motion.h2>
           <motion.p
             initial={{ opacity: 0 }}
@@ -531,102 +615,182 @@ function CapabilitiesSection() {
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {CAPABILITIES.map((c, i) => {
-            const Icon = c.icon
-            const ref2 = useRef<HTMLDivElement>(null)
-            const inV = useInView(ref2, { once: true, margin: '-40px' })
-            return (
-              <motion.div
-                key={c.title}
-                ref={ref2}
-                initial={{ opacity: 0, y: 32 }}
-                animate={inV ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.7, delay: i * 0.1 }}
-                className="group relative rounded-2xl border border-border bg-bg-surface p-7 hover:border-border-strong transition-all duration-300 overflow-hidden"
-              >
-                <div
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  style={{ background: `radial-gradient(ellipse 60% 60% at 30% 30%, ${c.color}12 0%, transparent 70%)` }}
-                />
-                <div
-                  className="w-10 h-10 rounded-xl border mb-5 flex items-center justify-center relative"
-                  style={{ borderColor: `${c.color}30`, background: `${c.color}10` }}
-                >
-                  <Icon size={18} style={{ color: c.color }} />
-                </div>
-                <h3 className="font-display font-600 text-[15px] text-ink mb-2 leading-snug">{c.title}</h3>
-                <p className="text-[13px] text-ink-muted leading-[1.65]">{c.desc}</p>
-              </motion.div>
-            )
-          })}
+        {/* Bento grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+          {CAPABILITIES.map((c, i) => (
+            <CapabilityCard key={c.title} c={c} i={i} large={i === 0} />
+          ))}
         </div>
+
+        {/* Stats banner */}
+        <motion.div
+          ref={statsRef}
+          initial={{ opacity: 0, y: 24 }}
+          animate={statsInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7 }}
+          className="rounded-3xl border border-brand/20 bg-brand/[0.04] p-8 flex flex-wrap items-center justify-around gap-8"
+        >
+          {[
+            { n: 'SaaS', label: 'Productos propios en producción' },
+            { n: 'ERP', label: 'Software operativo enterprise' },
+            { n: 'n8n + IA', label: 'Stack de automatización' },
+            { n: 'B2B', label: 'Foco exclusivo de mercado' },
+          ].map((s) => (
+            <div key={s.label} className="text-center">
+              <div className="font-display text-[2.2rem] font-extrabold text-brand leading-none">{s.n}</div>
+              <div className="text-[12px] text-ink-dim mt-1.5 tracking-wide">{s.label}</div>
+            </div>
+          ))}
+        </motion.div>
       </div>
     </section>
   )
 }
 
-/* ── Method ──────────────────────────────────────────────────── */
+/* ── Method ─────────────────────────────────────────────────── */
 const STEPS = [
-  { n: '01', title: 'Discovery', desc: 'Entendemos la operación real: fricción, actores, datos y prioridad. Sin suposiciones.' },
-  { n: '02', title: 'Definición del sistema', desc: 'Diseñamos la arquitectura, los módulos y los contratos de datos antes de escribir código.' },
-  { n: '03', title: 'Construcción', desc: 'Desarrollo incremental con entregas reales. El software funciona desde la primera iteración.' },
-  { n: '04', title: 'Evolución', desc: 'El sistema crece con el negocio. Monitoreo, mejoras y expansión controlada.' },
+  {
+    n: '01',
+    title: 'Discovery',
+    desc: 'Entendemos la operación real: fricción, actores, datos y prioridad. Sin suposiciones.',
+  },
+  {
+    n: '02',
+    title: 'Definición',
+    desc: 'Diseñamos arquitectura, módulos y contratos de datos antes de escribir código.',
+  },
+  {
+    n: '03',
+    title: 'Construcción',
+    desc: 'Desarrollo incremental con entregas reales. El software funciona desde la primera iteración.',
+  },
+  {
+    n: '04',
+    title: 'Evolución',
+    desc: 'El sistema crece con el negocio. Monitoreo, mejoras y expansión controlada.',
+  },
 ]
+
+function StepCard({ s, i }: { s: (typeof STEPS)[0]; i: number }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const inView = useInView(ref, { once: true, margin: '-40px' })
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 28 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.7, delay: i * 0.12 }}
+      className="relative bg-[#050508] p-9 group hover:bg-bg-surface transition-colors duration-300 border-r border-b border-border last:border-r-0 md:[&:nth-child(2)]:border-r-0 lg:[&:nth-child(2)]:border-r lg:[&:nth-child(4)]:border-r-0"
+    >
+      {/* Step badge */}
+      <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl border border-brand/30 bg-brand/[0.07] mb-8 group-hover:border-brand/55 transition-colors">
+        <span className="font-display font-extrabold text-[15px] text-brand">{s.n}</span>
+      </div>
+      <h3 className="font-display font-bold text-[18px] text-ink mb-3">{s.title}</h3>
+      <p className="text-[13px] text-ink-muted leading-[1.75]">{s.desc}</p>
+    </motion.div>
+  )
+}
 
 function MethodSection() {
   const ref = useRef<HTMLDivElement>(null)
   const inView = useInView(ref, { once: true, margin: '-60px' })
 
   return (
-    <section id="metodo" className="py-28 relative overflow-hidden">
+    <section id="metodo" className="py-36 relative overflow-hidden">
       <div className="absolute inset-0 bg-[#050508]" />
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border-strong to-transparent" />
+      <div className="absolute top-0 inset-x-0 h-px section-line" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">
-        <div ref={ref} className="max-w-xl mb-16">
+        <div
+          ref={ref}
+          className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-20"
+        >
+          <div>
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              className="text-[11px] font-bold text-brand tracking-[0.2em] uppercase mb-3"
+            >
+              Método
+            </motion.p>
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: 0.1 }}
+              className="font-display text-[clamp(2rem,4.5vw,3.5rem)] font-extrabold tracking-tight text-ink leading-[1.0]"
+            >
+              Cómo trabajamos.
+            </motion.h2>
+          </div>
           <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            className="text-[12px] font-semibold text-brand tracking-widest uppercase mb-3"
+            initial={{ opacity: 0 }}
+            animate={inView ? { opacity: 1 } : {}}
+            transition={{ delay: 0.2 }}
+            className="text-[14px] text-ink-muted max-w-xs leading-relaxed"
           >
-            Método
+            Una secuencia que reduce improvisación y convierte intención en software que funciona.
           </motion.p>
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.1 }}
-            className="font-display text-[clamp(1.8rem,3.5vw,2.8rem)] font-700 tracking-tight text-ink"
-          >
-            Cómo trabajamos.
-          </motion.h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0 relative">
-          {/* Connecting line */}
-          <div className="hidden lg:block absolute top-7 left-[12.5%] right-[12.5%] h-px bg-gradient-to-r from-transparent via-border-strong to-transparent" />
-
-          {STEPS.map((s, i) => {
-            const refS = useRef<HTMLDivElement>(null)
-            const inV = useInView(refS, { once: true, margin: '-40px' })
-            return (
-              <motion.div
-                key={s.n}
-                ref={refS}
-                initial={{ opacity: 0, y: 28 }}
-                animate={inV ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.7, delay: i * 0.12 }}
-                className="relative px-6 py-8 group"
-              >
-                <div className="w-14 h-14 rounded-2xl bg-bg-surface border border-border flex items-center justify-center mb-6 group-hover:border-brand/40 transition-colors duration-300 relative z-10">
-                  <span className="font-display font-700 text-[15px] text-brand">{s.n}</span>
-                </div>
-                <h3 className="font-display font-600 text-[16px] text-ink mb-2">{s.title}</h3>
-                <p className="text-[13px] text-ink-muted leading-[1.65]">{s.desc}</p>
-              </motion.div>
-            )
-          })}
+        {/* Steps grid with dividers */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border border-border rounded-3xl overflow-hidden">
+          {STEPS.map((s, i) => (
+            <StepCard key={s.n} s={s} i={i} />
+          ))}
         </div>
+      </div>
+    </section>
+  )
+}
+
+/* ── CTA Banner ─────────────────────────────────────────────── */
+function CtaBanner() {
+  const ref = useRef<HTMLDivElement>(null)
+  const inView = useInView(ref, { once: true, margin: '-80px' })
+
+  return (
+    <section className="py-24 relative overflow-hidden">
+      <div className="absolute inset-0 bg-bg-2" />
+      <div className="absolute top-0 inset-x-0 h-px section-line" />
+
+      <div className="relative z-10 max-w-7xl mx-auto px-6">
+        <motion.div
+          ref={ref}
+          initial={{ opacity: 0, y: 32, scale: 0.98 }}
+          animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
+          transition={{ duration: 0.85, ease: [0.25, 0.46, 0.45, 0.94] }}
+          className="relative rounded-3xl overflow-hidden border border-white/[0.08] bg-bg-surface p-20 text-center"
+        >
+          {/* Gradient backgrounds */}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_130%,rgba(52,216,116,0.12)_0%,transparent_60%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_50%_at_90%_5%,rgba(99,102,241,0.1)_0%,transparent_60%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_40%_40%_at_10%_95%,rgba(167,139,250,0.07)_0%,transparent_60%)]" />
+          <div className="absolute inset-0 bg-grid opacity-20" />
+
+          <div className="relative z-10">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-brand/35 bg-brand/[0.07] backdrop-blur-sm mb-6">
+              <Zap size={12} className="text-brand" />
+              <span className="text-[11px] font-bold text-brand tracking-[0.15em] uppercase">
+                Empieza hoy
+              </span>
+            </div>
+            <h2 className="font-display text-[clamp(2.2rem,5vw,4rem)] font-extrabold tracking-tight text-ink mb-6 max-w-2xl mx-auto leading-[0.97]">
+              Convierte tu operación en
+              <br />
+              <span className="gradient-text">un sistema que escala.</span>
+            </h2>
+            <p className="text-[15px] text-ink-muted mb-12 max-w-[440px] mx-auto leading-relaxed">
+              Un diagnóstico inicial para entender tu fricción y cómo la convertiríamos en sistema.
+            </p>
+            <a href="#contacto">
+              <button className="group h-14 px-12 rounded-2xl bg-brand text-bg-base font-bold text-[16px] flex items-center gap-3 mx-auto hover:bg-brand/90 transition-all hover:gap-4 shadow-[0_0_60px_rgba(52,216,116,0.35)]">
+                Iniciar conversación <ArrowRight size={18} className="transition-transform group-hover:translate-x-1.5" />
+              </button>
+            </a>
+          </div>
+        </motion.div>
       </div>
     </section>
   )
@@ -645,7 +809,13 @@ function ContactSection() {
   const ref = useRef<HTMLDivElement>(null)
   const inView = useInView(ref, { once: true, margin: '-60px' })
   const [status, setStatus] = useState<'idle' | 'sending' | 'ok' | 'err'>('idle')
-  const [form, setForm] = useState({ nombre: '', empresa: '', correo: '', tipo_necesidad: '', contexto: '' })
+  const [form, setForm] = useState({
+    nombre: '',
+    empresa: '',
+    correo: '',
+    tipo_necesidad: '',
+    contexto: '',
+  })
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -663,21 +833,21 @@ function ContactSection() {
   }
 
   const fieldCls =
-    'w-full bg-bg-muted border border-border rounded-xl px-4 py-3 text-[14px] text-ink placeholder:text-ink-dim focus:border-brand/50 focus:outline-none transition-colors'
+    'w-full bg-bg-muted border border-border rounded-xl px-4 py-3.5 text-[14px] text-ink placeholder:text-ink-dim focus:border-brand/50 focus:outline-none transition-colors'
 
   return (
-    <section id="contacto" className="py-28 relative overflow-hidden">
-      <div className="absolute inset-0 bg-bg-2" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_80%_at_50%_100%,rgba(52,216,116,0.06)_0%,transparent_65%)]" />
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border-strong to-transparent" />
+    <section id="contacto" className="py-36 relative overflow-hidden">
+      <div className="absolute inset-0 bg-[#050508]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_60%_at_50%_100%,rgba(52,216,116,0.05)_0%,transparent_65%)]" />
+      <div className="absolute top-0 inset-x-0 h-px section-line" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">
-        <div ref={ref} className="max-w-4xl mx-auto">
+        <div ref={ref} className="max-w-3xl mx-auto">
           <div className="text-center mb-14">
             <motion.p
               initial={{ opacity: 0, y: 16 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              className="text-[12px] font-semibold text-brand tracking-widest uppercase mb-3"
+              className="text-[11px] font-bold text-brand tracking-[0.2em] uppercase mb-3"
             >
               Contacto
             </motion.p>
@@ -685,7 +855,7 @@ function ContactSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.1 }}
-              className="font-display text-[clamp(1.8rem,3.5vw,2.8rem)] font-700 tracking-tight text-ink mb-4"
+              className="font-display text-[clamp(2rem,4.5vw,3.5rem)] font-extrabold tracking-tight text-ink mb-5"
             >
               Trabajemos juntos.
             </motion.h2>
@@ -710,20 +880,20 @@ function ContactSection() {
                   key="ok"
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  className="rounded-2xl border border-brand/30 bg-brand/5 p-12 text-center"
+                  className="rounded-3xl border border-brand/30 bg-brand/5 p-16 text-center"
                 >
-                  <CheckCircle2 size={40} className="text-brand mx-auto mb-4" />
-                  <h3 className="font-display text-xl font-600 text-ink mb-2">Mensaje recibido</h3>
+                  <CheckCircle2 size={48} className="text-brand mx-auto mb-5" />
+                  <h3 className="font-display text-xl font-bold text-ink mb-2">Mensaje recibido</h3>
                   <p className="text-[14px] text-ink-muted">Te contactaremos pronto al correo indicado.</p>
                 </motion.div>
               ) : (
                 <motion.form
                   key="form"
                   onSubmit={handleSubmit}
-                  className="rounded-2xl border border-border bg-bg-surface p-8 md:p-10 grid grid-cols-1 md:grid-cols-2 gap-5"
+                  className="rounded-3xl border border-border bg-bg-surface p-8 md:p-12 grid grid-cols-1 md:grid-cols-2 gap-5"
                 >
                   <div>
-                    <label className="block text-[12px] font-semibold text-ink-muted uppercase tracking-wide mb-2">Nombre</label>
+                    <label className="block text-[11px] font-bold text-ink-dim uppercase tracking-widest mb-2">Nombre</label>
                     <input
                       className={fieldCls}
                       placeholder="Tu nombre"
@@ -733,7 +903,7 @@ function ContactSection() {
                     />
                   </div>
                   <div>
-                    <label className="block text-[12px] font-semibold text-ink-muted uppercase tracking-wide mb-2">Empresa</label>
+                    <label className="block text-[11px] font-bold text-ink-dim uppercase tracking-widest mb-2">Empresa</label>
                     <input
                       className={fieldCls}
                       placeholder="Nombre de la empresa"
@@ -743,7 +913,7 @@ function ContactSection() {
                     />
                   </div>
                   <div>
-                    <label className="block text-[12px] font-semibold text-ink-muted uppercase tracking-wide mb-2">Correo</label>
+                    <label className="block text-[11px] font-bold text-ink-dim uppercase tracking-widest mb-2">Correo</label>
                     <input
                       type="email"
                       className={fieldCls}
@@ -754,7 +924,7 @@ function ContactSection() {
                     />
                   </div>
                   <div>
-                    <label className="block text-[12px] font-semibold text-ink-muted uppercase tracking-wide mb-2">Necesidad</label>
+                    <label className="block text-[11px] font-bold text-ink-dim uppercase tracking-widest mb-2">Necesidad</label>
                     <select
                       className={fieldCls}
                       value={form.tipo_necesidad}
@@ -762,11 +932,13 @@ function ContactSection() {
                       required
                     >
                       <option value="">Selecciona una opción</option>
-                      {NEEDS.map((n) => <option key={n}>{n}</option>)}
+                      {NEEDS.map((n) => (
+                        <option key={n}>{n}</option>
+                      ))}
                     </select>
                   </div>
                   <div className="md:col-span-2">
-                    <label className="block text-[12px] font-semibold text-ink-muted uppercase tracking-wide mb-2">Contexto</label>
+                    <label className="block text-[11px] font-bold text-ink-dim uppercase tracking-widest mb-2">Contexto</label>
                     <textarea
                       className={cn(fieldCls, 'resize-none')}
                       rows={5}
@@ -784,10 +956,15 @@ function ContactSection() {
                       <button
                         type="submit"
                         disabled={status === 'sending'}
-                        className="group h-11 px-8 rounded-xl bg-brand text-bg-base font-semibold text-[14px] flex items-center gap-2 hover:bg-brand/90 disabled:opacity-50 transition-all"
+                        className="group h-12 px-8 rounded-2xl bg-brand text-bg-base font-bold text-[14px] flex items-center gap-2.5 hover:bg-brand/90 disabled:opacity-50 transition-all shadow-[0_0_30px_rgba(52,216,116,0.25)]"
                       >
-                        {status === 'sending' ? 'Enviando…' : (
-                          <>Enviar mensaje <ArrowRight size={15} className="transition-transform group-hover:translate-x-0.5" /></>
+                        {status === 'sending' ? (
+                          'Enviando…'
+                        ) : (
+                          <>
+                            Enviar mensaje{' '}
+                            <ArrowRight size={15} className="transition-transform group-hover:translate-x-0.5" />
+                          </>
                         )}
                       </button>
                     </div>
@@ -802,50 +979,43 @@ function ContactSection() {
   )
 }
 
-/* ── Footer ──────────────────────────────────────────────────── */
+/* ── Footer ─────────────────────────────────────────────────── */
 function Footer() {
   return (
     <footer className="border-t border-border bg-[#050508] py-12 px-6">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-        <div className="flex items-center gap-2.5">
-          <div className="w-6 h-6 rounded bg-brand/10 border border-brand/30 flex items-center justify-center">
-            <div className="w-2.5 h-2.5 rounded-sm bg-brand" />
-          </div>
-          <span className="font-display font-600 text-[14px] text-ink">WiseForge Studio</span>
+        <div className="flex items-center gap-3">
+          <Image src="/logo-wfs.png" alt="WiseForge Studio" width={26} height={26} className="rounded-md opacity-80" />
+          <span className="font-display font-semibold text-[14px] text-ink">WiseForge Studio</span>
         </div>
-
         <div className="flex items-center gap-6">
           {NAV_LINKS.map((l) => (
-            <a key={l.href} href={l.href} className="text-[13px] text-ink-dim hover:text-ink-muted transition-colors">
+            <a
+              key={l.href}
+              href={l.href}
+              className="text-[13px] text-ink-dim hover:text-ink-muted transition-colors"
+            >
               {l.label}
             </a>
           ))}
         </div>
-
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 text-[13px] text-ink-dim">
           <a
             href="mailto:contacto@wiseforgestudio.com"
-            className="flex items-center gap-1.5 text-[13px] text-ink-muted hover:text-ink transition-colors"
+            className="flex items-center gap-1.5 hover:text-ink-muted transition-colors"
           >
             <Mail size={13} /> contacto@wiseforgestudio.com
           </a>
-          <a
-            href="/hq"
-            className="flex items-center gap-1.5 text-[13px] text-ink-dim hover:text-ink-muted transition-colors"
-          >
-            <ExternalLink size={12} /> HQ
-          </a>
+          <span>·</span>
+          <span>© {new Date().getFullYear()}</span>
         </div>
-      </div>
-      <div className="max-w-7xl mx-auto mt-8 pt-6 border-t border-border text-center text-[12px] text-ink-dim">
-        © {new Date().getFullYear()} WiseForge Studio. Todos los derechos reservados.
       </div>
     </footer>
   )
 }
 
 /* ── Page ────────────────────────────────────────────────────── */
-export default function Home() {
+export default function Page() {
   return (
     <>
       <CursorSpotlight />
@@ -855,6 +1025,7 @@ export default function Home() {
         <ProductsSection />
         <CapabilitiesSection />
         <MethodSection />
+        <CtaBanner />
         <ContactSection />
       </main>
       <Footer />
