@@ -23,19 +23,13 @@ import {
   LayoutDashboard,
   Mail,
   ExternalLink,
-  Layers,
   Zap,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
-
-const HeroScene = dynamic(() => import('@/components/3d/hero-scene'), {
-  ssr: false,
-  loading: () => (
-    <div className="w-full h-full flex items-center justify-center">
-      <div className="w-16 h-16 border-2 border-brand/30 border-t-brand rounded-full animate-spin" />
-    </div>
-  ),
-})
+import { Hero1 } from '@/components/ui/hero-1'
+import { SplineScene } from '@/components/ui/splite'
+import { Card } from '@/components/ui/card'
+import { Spotlight } from '@/components/ui/spotlight'
 
 /* ── Animation variants ─────────────────────────────────────── */
 const fadeUp = {
@@ -157,121 +151,77 @@ function CursorSpotlight() {
   return <div ref={ref} className="spotlight-cursor pointer-events-none fixed inset-0 z-[1]" aria-hidden />
 }
 
-/* ── Hero ───────────────────────────────────────────────────── */
+/* ── Hero — usa Hero1 component ─────────────────────────────── */
 function HeroSection() {
+  return <Hero1 />
+}
+
+/* ── Spline 3D Showcase ─────────────────────────────────────── */
+function SplineShowcase() {
+  const ref = useRef<HTMLDivElement>(null)
+  const inView = useInView(ref, { once: true, margin: '-80px' })
+
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden scan-line pt-16">
-      {/* Three.js 3D background */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 2, ease: 'easeOut' }}
-        className="absolute inset-0"
-      >
-        <HeroScene />
-      </motion.div>
+    <section className="py-24 relative overflow-hidden bg-[#050508]">
+      <div className="absolute top-0 inset-x-0 h-px section-line" />
+      <div className="relative z-10 max-w-7xl mx-auto px-6">
+        <div ref={ref} className="text-center mb-10">
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            className="text-[11px] font-bold text-brand tracking-[0.2em] uppercase mb-3"
+          >
+            Tecnología
+          </motion.p>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.1 }}
+            className="font-display text-[clamp(1.8rem,3.5vw,2.8rem)] font-extrabold tracking-tight text-ink"
+          >
+            Sistemas interactivos en 3D.
+          </motion.h2>
+        </div>
 
-      {/* Radial vignette */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_90%_70%_at_50%_50%,transparent_20%,rgba(5,5,8,0.88)_100%)] pointer-events-none z-10" />
-      <div className="absolute inset-x-0 bottom-0 h-56 hero-vignette-bottom pointer-events-none z-10" />
-      <div className="absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-[#050508]/90 to-transparent pointer-events-none z-10" />
-
-      {/* Centered content */}
-      <div className="relative z-20 text-center px-6 max-w-5xl mx-auto w-full">
-        {/* Badge */}
         <motion.div
-          variants={fadeUp} initial="hidden" animate="visible" custom={0}
-          className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-brand/35 bg-brand/[0.07] backdrop-blur-sm mb-10"
+          initial={{ opacity: 0, y: 32 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: 0.2, duration: 0.8 }}
         >
-          <span className="w-1.5 h-1.5 rounded-full bg-brand animate-pulse" />
-          <span className="text-[11px] font-bold text-brand tracking-[0.18em] uppercase">
-            Studio de software operativo · B2B
-          </span>
-        </motion.div>
+          <Card className="w-full h-[500px] bg-black/[0.96] relative overflow-hidden border-border">
+            <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="white" />
+            <div className="flex h-full">
+              {/* Left content */}
+              <div className="flex-1 p-10 relative z-10 flex flex-col justify-center">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-brand/35 bg-brand/[0.07] mb-6 w-fit">
+                  <span className="w-1.5 h-1.5 rounded-full bg-brand animate-pulse" />
+                  <span className="text-[11px] font-bold text-brand tracking-widest uppercase">3D Interactive</span>
+                </div>
+                <h3 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 font-display leading-tight">
+                  Sistemas que
+                  <br />se pueden ver.
+                </h3>
+                <p className="mt-5 text-neutral-400 max-w-xs text-[14px] leading-relaxed">
+                  WiseForge construye capas digitales complejas con interfaces claras, modernas y preparadas para operar.
+                </p>
+                <a href="#productos" className="mt-8 w-fit">
+                  <button className="group h-11 px-6 rounded-xl bg-brand text-bg-base font-bold text-[14px] flex items-center gap-2 hover:bg-brand/90 transition-all shadow-[0_0_30px_rgba(52,216,116,0.25)]">
+                    Ver productos <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
+                  </button>
+                </a>
+              </div>
 
-        {/* Headline — mega */}
-        <motion.h1
-          variants={fadeUp} initial="hidden" animate="visible" custom={1}
-          className="font-display font-extrabold text-[clamp(3rem,9vw,8rem)] leading-[0.91] tracking-[-0.02em] text-ink mb-8"
-        >
-          Software que
-          <br />
-          <span className="gradient-text">opera tu empresa</span>
-          <br />
-          de verdad.
-        </motion.h1>
-
-        {/* Subtitle */}
-        <motion.p
-          variants={fadeUp} initial="hidden" animate="visible" custom={2}
-          className="text-[17px] leading-[1.75] text-ink-muted max-w-[520px] mx-auto mb-12"
-        >
-          Diseñamos soluciones para empresas que necesitan control, trazabilidad y
-          una capa digital más seria. No piezas sueltas — sistemas completos.
-        </motion.p>
-
-        {/* CTAs */}
-        <motion.div
-          variants={fadeUp} initial="hidden" animate="visible" custom={3}
-          className="flex flex-wrap gap-4 justify-center mb-20"
-        >
-          <a href="#productos">
-            <button className="group h-14 px-10 rounded-2xl bg-brand text-bg-base font-bold text-[15px] flex items-center gap-2.5 hover:bg-brand/90 transition-all shadow-[0_0_50px_rgba(52,216,116,0.35)] hover:shadow-[0_0_70px_rgba(52,216,116,0.45)]">
-              Ver productos <ArrowRight size={17} className="transition-transform group-hover:translate-x-1" />
-            </button>
-          </a>
-          <a href="#contacto">
-            <button className="h-14 px-10 rounded-2xl border border-white/20 bg-white/[0.05] backdrop-blur-sm text-ink text-[15px] font-semibold hover:border-white/35 hover:bg-white/[0.09] transition-all">
-              Contactar estudio
-            </button>
-          </a>
-        </motion.div>
-
-        {/* Stats strip */}
-        <motion.div
-          variants={fadeUp} initial="hidden" animate="visible" custom={4}
-          className="flex flex-wrap items-center justify-center gap-x-12 gap-y-6 pt-8 border-t border-white/[0.07]"
-        >
-          {[
-            { n: '2', label: 'Productos en mercado' },
-            { n: '4', label: 'Líneas de servicio' },
-            { n: '0→1', label: 'Discovery a producción' },
-            { n: 'B2B', label: 'Foco exclusivo' },
-          ].map((s) => (
-            <div key={s.label} className="text-center">
-              <div className="font-display text-[2.2rem] font-extrabold text-ink leading-none">{s.n}</div>
-              <div className="text-[11px] text-ink-dim mt-1.5 font-medium tracking-wide uppercase">{s.label}</div>
+              {/* Right — Spline 3D scene */}
+              <div className="flex-1 relative hidden md:block">
+                <SplineScene
+                  scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
+                  className="w-full h-full"
+                />
+              </div>
             </div>
-          ))}
+          </Card>
         </motion.div>
       </div>
-
-      {/* Floating badges */}
-      <motion.div
-        animate={{ y: [0, -10, 0] }}
-        transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute top-28 right-8 lg:right-24 glass rounded-2xl px-5 py-3.5 border border-brand/25 z-20 hidden lg:block"
-      >
-        <p className="text-[10px] text-ink-dim font-semibold uppercase tracking-widest mb-1">Fase activa</p>
-        <p className="text-[14px] font-bold text-brand">HQ Bootstrap</p>
-      </motion.div>
-      <motion.div
-        animate={{ y: [0, 10, 0] }}
-        transition={{ duration: 5.5, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
-        className="absolute bottom-36 left-8 lg:left-24 glass rounded-2xl px-5 py-3.5 border border-border z-20 hidden lg:block"
-      >
-        <p className="text-[10px] text-ink-dim font-semibold uppercase tracking-widest mb-1">Productos</p>
-        <p className="text-[14px] font-bold text-ink">AssetMaster · GanaMaxcol</p>
-      </motion.div>
-
-      {/* Scroll indicator */}
-      <motion.div
-        animate={{ y: [0, 6, 0] }}
-        transition={{ duration: 2, repeat: Infinity }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-ink-dim z-20"
-      >
-        <ArrowDown size={16} />
-      </motion.div>
     </section>
   )
 }
@@ -1022,6 +972,7 @@ export default function Page() {
       <Navbar />
       <main>
         <HeroSection />
+        <SplineShowcase />
         <ProductsSection />
         <CapabilitiesSection />
         <MethodSection />
