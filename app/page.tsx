@@ -22,6 +22,7 @@ import { cn } from '@/lib/utils'
 import { SplineScene } from '@/components/ui/splite'
 import { Spotlight } from '@/components/ui/spotlight'
 import { Card } from '@/components/ui/card'
+import { SparklesCore } from '@/components/ui/sparkles'
 
 /* ── Nav links ───────────────────────────────────────────────── */
 const NAV_LINKS = [
@@ -122,12 +123,26 @@ function HeroSection() {
       {/* Aceternity spotlight */}
       <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="white" />
 
-      {/* Gradient mesh background */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_20%_50%,rgba(120,119,198,0.15)_0%,transparent_60%)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_80%_at_80%_20%,rgba(52,216,116,0.07)_0%,transparent_50%)]" />
+      {/* Sparkles particle background — full hero */}
+      <div className="absolute inset-0 z-0">
+        <SparklesCore
+          id="hero-sparkles"
+          background="transparent"
+          minSize={0.4}
+          maxSize={1.2}
+          particleDensity={90}
+          particleColor="#ffffff"
+          speed={0.6}
+          className="w-full h-full"
+        />
+      </div>
+
+      {/* Gradient mesh on top of sparkles */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_20%_50%,rgba(120,119,198,0.18)_0%,transparent_60%)] z-[1]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_80%_at_80%_20%,rgba(52,216,116,0.08)_0%,transparent_50%)] z-[1]" />
 
       {/* Grid overlay */}
-      <div className="absolute inset-0 bg-grid opacity-20" />
+      <div className="absolute inset-0 bg-grid opacity-15 z-[1]" />
 
       {/* LEFT — content */}
       <div className="relative z-20 flex-1 flex flex-col justify-center px-8 md:px-16 lg:px-24 max-w-[50%]">
@@ -517,9 +532,21 @@ function CtaBanner() {
       <div className="relative z-10 max-w-7xl mx-auto px-6">
         <motion.div ref={ref} initial={{ opacity: 0, y: 32, scale: 0.98 }} animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}} transition={{ duration: 0.85 }}
           className="relative rounded-3xl overflow-hidden border border-white/[0.07] bg-white/[0.02] p-20 text-center">
+          <div className="absolute inset-0">
+            <SparklesCore
+              id="cta-sparkles"
+              background="transparent"
+              minSize={0.3}
+              maxSize={0.9}
+              particleDensity={50}
+              particleColor="#34d874"
+              speed={0.4}
+              className="w-full h-full"
+            />
+          </div>
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_130%,rgba(52,216,116,0.1)_0%,transparent_60%)]" />
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_50%_at_90%_5%,rgba(99,102,241,0.08)_0%,transparent_60%)]" />
-          <div className="absolute inset-0 bg-grid opacity-15" />
+          <div className="absolute inset-0 bg-grid opacity-10" />
 
           <div className="relative z-10">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-green-500/30 bg-green-500/[0.07] mb-6">
