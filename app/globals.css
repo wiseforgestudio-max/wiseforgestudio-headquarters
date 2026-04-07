@@ -103,3 +103,54 @@ button { cursor: pointer; }
 input, textarea, select {
   font-family: var(--font-inter);
 }
+
+/* Cursor spotlight — follows mouse via JS CSS vars */
+.spotlight-cursor {
+  background: radial-gradient(
+    700px circle at var(--x, 50%) var(--y, 50%),
+    rgba(52, 216, 116, 0.045) 0%,
+    rgba(99, 102, 241, 0.025) 40%,
+    transparent 70%
+  );
+}
+
+/* Hero section gradient overlay helpers */
+.hero-vignette-bottom {
+  background: linear-gradient(to top, #050508 0%, #050508cc 25%, transparent 100%);
+}
+
+.hero-vignette-left {
+  background: linear-gradient(to right, rgba(5,5,8,0.82) 0%, rgba(5,5,8,0.42) 38%, transparent 70%);
+}
+
+/* Scanline shimmer (subtle) */
+@keyframes scanline {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+.scan-line::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 2px;
+  background: linear-gradient(to right, transparent, rgba(52,216,116,0.12), transparent);
+  animation: scanline 8s linear infinite;
+  pointer-events: none;
+}
+
+/* Gradient text variant — indigo-to-brand */
+.gradient-text-alt {
+  background: linear-gradient(135deg, #6366f1 0%, #a78bfa 40%, #34d874 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Section 3D border line */
+.section-line {
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(52,216,116,0.3) 25%, rgba(99,102,241,0.3) 75%, transparent);
+}

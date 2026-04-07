@@ -43,7 +43,11 @@ const fadeUp = {
   visible: (i = 0) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94], delay: i * 0.1 },
+    transition: {
+      duration: 0.7,
+      ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number],
+      delay: i * 0.1,
+    },
   }),
 }
 
@@ -156,136 +160,156 @@ function Navbar() {
   )
 }
 
+/* ── Cursor spotlight ─────────────────────────────────────────── */
+function CursorSpotlight() {
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const move = (e: MouseEvent) => {
+      if (!ref.current) return
+      ref.current.style.setProperty('--x', `${e.clientX}px`)
+      ref.current.style.setProperty('--y', `${e.clientY}px`)
+    }
+    window.addEventListener('mousemove', move, { passive: true })
+    return () => window.removeEventListener('mousemove', move)
+  }, [])
+
+  return (
+    <div
+      ref={ref}
+      className="spotlight-cursor pointer-events-none fixed inset-0 z-[1]"
+      aria-hidden
+    />
+  )
+}
+
 /* ── Hero ────────────────────────────────────────────────────── */
 function HeroSection() {
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden bg-grid">
-      {/* Backgrounds */}
-      <div className="absolute inset-0 bg-[#050508]" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_65%_50%,rgba(52,216,116,0.07)_0%,transparent_65%)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_80%_at_20%_60%,rgba(99,102,241,0.05)_0%,transparent_60%)]" />
+    <section className="relative h-screen flex items-center overflow-hidden scan-line">
+      {/* Full-screen 3D canvas */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.8, ease: 'easeOut' }}
+        className="absolute inset-0"
+      >
+        <HeroScene />
+      </motion.div>
+
+      {/* Gradient vignettes for text readability */}
+      <div className="absolute inset-0 hero-vignette-left pointer-events-none z-10" />
+      <div className="absolute inset-x-0 bottom-0 h-56 hero-vignette-bottom pointer-events-none z-10" />
+      <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-[#050508]/60 to-transparent pointer-events-none z-10" />
 
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 pt-24 pb-20 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        {/* Text */}
-        <div>
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            animate="visible"
-            custom={0}
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-brand/30 bg-brand/8 mb-7"
-          >
-            <div className="w-1.5 h-1.5 rounded-full bg-brand animate-pulse" />
-            <span className="text-[12px] font-semibold text-brand tracking-wide uppercase">
-              Studio de software operativo
-            </span>
-          </motion.div>
-
-          <motion.h1
-            variants={fadeUp}
-            initial="hidden"
-            animate="visible"
-            custom={1}
-            className="font-display font-800 text-[clamp(2.4rem,5vw,4.2rem)] leading-[1.08] tracking-tight text-ink mb-6"
-          >
-            Software que
-            <br />
-            <span className="gradient-text">opera tu empresa</span>
-            <br />
-            de verdad.
-          </motion.h1>
-
-          <motion.p
-            variants={fadeUp}
-            initial="hidden"
-            animate="visible"
-            custom={2}
-            className="text-[15px] leading-[1.7] text-ink-muted max-w-[460px] mb-10"
-          >
-            Diseñamos soluciones para empresas que necesitan control, trazabilidad y
-            una capa digital más seria. No piezas sueltas — sistemas completos.
-          </motion.p>
-
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            animate="visible"
-            custom={3}
-            className="flex flex-wrap gap-4"
-          >
-            <a href="#productos">
-              <button className="group h-11 px-7 rounded-xl bg-brand text-bg-base font-semibold text-[14px] flex items-center gap-2 hover:bg-brand/90 transition-all hover:gap-3">
-                Ver productos <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
-              </button>
-            </a>
-            <a href="#contacto">
-              <button className="h-11 px-7 rounded-xl border border-border bg-bg-surface/50 text-ink text-[14px] font-medium hover:border-border-strong hover:bg-bg-surface transition-all">
-                Contactar estudio
-              </button>
-            </a>
-          </motion.div>
-
-          {/* Stats */}
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            animate="visible"
-            custom={4}
-            className="flex gap-8 mt-12 pt-10 border-t border-border"
-          >
-            {[
-              { n: '2', label: 'Productos en mercado' },
-              { n: '100%', label: 'Local-first' },
-              { n: '0→1', label: 'Desde cero' },
-            ].map((s) => (
-              <div key={s.label}>
-                <div className="font-display text-2xl font-700 text-ink">{s.n}</div>
-                <div className="text-[12px] text-ink-muted mt-0.5">{s.label}</div>
-              </div>
-            ))}
-          </motion.div>
-        </div>
-
-        {/* 3D Scene */}
+      <div className="relative z-20 max-w-7xl mx-auto px-6 pt-16 pb-20 w-full">
+        {/* Badge */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.85 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.2, ease: 'easeOut', delay: 0.3 }}
-          className="relative h-[480px] lg:h-[580px]"
+          variants={fadeUp}
+          initial="hidden"
+          animate="visible"
+          custom={0}
+          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-brand/35 bg-brand/[0.07] backdrop-blur-sm mb-8"
         >
-          {/* Glow behind canvas */}
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <div className="w-72 h-72 rounded-full bg-brand/8 blur-[80px] animate-glow-pulse" />
-          </div>
-          <HeroScene />
+          <div className="w-1.5 h-1.5 rounded-full bg-brand animate-pulse" />
+          <span className="text-[12px] font-semibold text-brand tracking-widest uppercase">
+            Studio de software operativo
+          </span>
+        </motion.div>
 
-          {/* Floating badges */}
-          <motion.div
-            animate={{ y: [0, -8, 0] }}
-            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-            className="absolute top-12 left-0 glass rounded-xl px-4 py-2.5 border border-brand/20"
-          >
-            <p className="text-[11px] text-ink-muted font-medium">Fase activa</p>
-            <p className="text-[13px] font-semibold text-brand">HQ Bootstrap</p>
-          </motion.div>
+        {/* Headline */}
+        <motion.h1
+          variants={fadeUp}
+          initial="hidden"
+          animate="visible"
+          custom={1}
+          className="font-display font-extrabold text-[clamp(3rem,7vw,6.2rem)] leading-[1.01] tracking-tight text-ink mb-8 max-w-4xl"
+        >
+          Software que
+          <br />
+          <span className="gradient-text">opera tu empresa</span>
+          <br />
+          de verdad.
+        </motion.h1>
 
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-            className="absolute bottom-20 right-4 glass rounded-xl px-4 py-2.5 border border-border"
-          >
-            <p className="text-[11px] text-ink-muted font-medium">Agentes activos</p>
-            <p className="text-[13px] font-semibold text-ink">14 agentes</p>
-          </motion.div>
+        {/* Subtitle */}
+        <motion.p
+          variants={fadeUp}
+          initial="hidden"
+          animate="visible"
+          custom={2}
+          className="text-[16px] leading-[1.72] text-ink-muted max-w-[480px] mb-10"
+        >
+          Diseñamos soluciones para empresas que necesitan control, trazabilidad y
+          una capa digital más seria. No piezas sueltas — sistemas completos.
+        </motion.p>
+
+        {/* CTAs */}
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          animate="visible"
+          custom={3}
+          className="flex flex-wrap gap-4 mb-14"
+        >
+          <a href="#productos">
+            <button className="group h-12 px-8 rounded-xl bg-brand text-bg-base font-semibold text-[15px] flex items-center gap-2 hover:bg-brand/90 transition-all hover:gap-3 shadow-[0_0_30px_rgba(52,216,116,0.25)]">
+              Ver productos <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+            </button>
+          </a>
+          <a href="#contacto">
+            <button className="h-12 px-8 rounded-xl border border-border/60 bg-bg-surface/30 backdrop-blur-sm text-ink text-[15px] font-medium hover:border-border-strong hover:bg-bg-surface/50 transition-all">
+              Contactar estudio
+            </button>
+          </a>
+        </motion.div>
+
+        {/* Stats */}
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          animate="visible"
+          custom={4}
+          className="flex gap-10 pt-8 border-t border-border/40 max-w-xs"
+        >
+          {[
+            { n: '2', label: 'Productos en mercado' },
+            { n: '100%', label: 'Local-first' },
+            { n: '0→1', label: 'Desde cero' },
+          ].map((s) => (
+            <div key={s.label}>
+              <div className="font-display text-3xl font-extrabold text-ink">{s.n}</div>
+              <div className="text-[11px] text-ink-muted mt-1 leading-snug">{s.label}</div>
+            </div>
+          ))}
         </motion.div>
       </div>
+
+      {/* Floating badges — repositioned to right side */}
+      <motion.div
+        animate={{ y: [0, -8, 0] }}
+        transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+        className="absolute top-32 right-8 lg:right-20 glass rounded-xl px-4 py-2.5 border border-brand/20 z-20"
+      >
+        <p className="text-[11px] text-ink-muted font-medium">Fase activa</p>
+        <p className="text-[13px] font-semibold text-brand">HQ Bootstrap</p>
+      </motion.div>
+
+      <motion.div
+        animate={{ y: [0, 8, 0] }}
+        transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+        className="absolute bottom-28 right-8 lg:right-20 glass rounded-xl px-4 py-2.5 border border-border z-20"
+      >
+        <p className="text-[11px] text-ink-muted font-medium">Agentes activos</p>
+        <p className="text-[13px] font-semibold text-ink">14 agentes</p>
+      </motion.div>
 
       {/* Scroll indicator */}
       <motion.div
         animate={{ y: [0, 6, 0] }}
         transition={{ duration: 2, repeat: Infinity }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-ink-dim"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-ink-dim z-20"
       >
         <ArrowDown size={16} />
       </motion.div>
@@ -824,6 +848,7 @@ function Footer() {
 export default function Home() {
   return (
     <>
+      <CursorSpotlight />
       <Navbar />
       <main>
         <HeroSection />
