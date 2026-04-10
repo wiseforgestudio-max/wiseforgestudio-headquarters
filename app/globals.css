@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap');
-
 :root {
   --font-inter: 'Manrope', system-ui, sans-serif;
   --font-outfit: 'Fraunces', serif;
@@ -124,6 +122,10 @@ button {
 
 .marquee-track {
   animation: marquee 20s linear infinite;
+}
+
+.font-display {
+  font-family: var(--font-outfit);
 }
 
 @keyframes drift {
