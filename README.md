@@ -19,6 +19,37 @@ Fase 1 funcional de un headquarters multiagente local-first para coordinar organ
 - Costo cero: sin servicios obligatorios ni dependencias de pago.
 - Operacion local-first con opcion de companion web en LAN.
 
+## Flujo Spec-Driven
+
+Este repo ya quedo inicializado con GitHub Spec Kit. La base del proceso ahora vive en [`.specify/memory/constitution.md`](C:/Users/USUARIO/WiseForgeStudio-Headquarters/.specify/memory/constitution.md) y en los prompts/agentes creados bajo [`.github/prompts`](C:/Users/USUARIO/WiseForgeStudio-Headquarters/.github/prompts) y [`.github/agents`](C:/Users/USUARIO/WiseForgeStudio-Headquarters/.github/agents).
+
+Secuencia recomendada para trabajo nuevo:
+
+1. Crear una feature branch y su carpeta numerada en `specs/`:
+
+```powershell
+.\.specify\scripts\powershell\create-new-feature.ps1 "Describe aqui la feature"
+```
+
+2. En el agente AI usar:
+
+```text
+/speckit.constitution
+/speckit.specify
+/speckit.clarify
+/speckit.plan
+/speckit.tasks
+/speckit.implement
+```
+
+3. Validar antes de desplegar:
+
+```bash
+npm run build
+```
+
+Regla operativa: ninguna feature relevante debe pasar directo a codigo sin spec, plan y tareas trazables.
+
 ## Ejecutar
 
 ```bash

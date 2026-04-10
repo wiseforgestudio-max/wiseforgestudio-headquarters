@@ -3,618 +3,178 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>WiseForge Studio | Sistemas digitales para operaciones complejas</title>
+    <title>WiseForge Studio | Producto, automatizacion y software operativo</title>
     <meta
       name="description"
-      content="WiseForge Studio diseña productos SaaS, plataformas internas y automatización para empresas que necesitan menos fricción, más control y sistemas operativos serios."
+      content="WiseForge Studio diseña producto digital, automatizacion y software operativo. Conoce AssetMaster, GanaMaxcol y los servicios del estudio."
     >
-    <!-- Favicon -->
-    <link rel="icon" href="/logo-wfs.png" type="image/png">
-    <link rel="apple-touch-icon" href="/logo-wfs.png">
-
-    <!-- Canonical -->
-    <link rel="canonical" href="https://wiseforgestudio.com">
-
-    <!-- Open Graph -->
-    <meta property="og:title" content="WiseForge Studio | Sistemas digitales para operaciones complejas">
-    <meta property="og:description" content="Diseñamos productos SaaS, plataformas internas y automatización para empresas que necesitan control, trazabilidad y sistemas operativos serios.">
-    <meta property="og:image" content="https://wiseforgestudio.com/landing-shot-hero-refined.png">
-    <meta property="og:url" content="https://wiseforgestudio.com">
-    <meta property="og:type" content="website">
-    <meta property="og:locale" content="es_CO">
-    <meta name="twitter:card" content="summary_large_image">
-
-    <!-- Fuente web cross-platform -->
     <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700,800,900|space-grotesk:400,500,600,700&display=swap" rel="stylesheet">
-
-    <!-- Structured Data -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "WiseForge Studio",
-      "url": "https://wiseforgestudio.com",
-      "logo": "https://wiseforgestudio.com/logo-wfs-primary.svg",
-      "description": "Studio de software B2B. Diseñamos productos SaaS, plataformas internas y automatización operativa.",
-      "email": "contacto@wiseforgestudio.com"
-    }
-    </script>
-
+    <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700,800|space-grotesk:500,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/styles.css">
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.44/build/spline-viewer.js"></script>
   </head>
   <body>
-    <a class="skip-link" href="#main-content">Saltar al contenido</a>
-    <div class="scroll-progress" aria-hidden="true"><span id="scroll-progress-bar"></span></div>
+    <div class="page-noise" aria-hidden="true"></div>
+    <div class="mouse-spotlight" aria-hidden="true"></div>
 
-    <div class="page-shell">
-      <header class="site-header">
-        <a class="brand" href="#inicio" aria-label="WiseForge Studio">
-          <img src="/logo-wfs.png" alt="Logo de WiseForge Studio" width="46" height="46">
-          <span>
-            <strong>WiseForge Studio</strong>
-            <small>Software operativo para empresas en crecimiento</small>
-          </span>
-        </a>
+    <header class="topbar">
+      <a class="topbar-brand" href="/">
+        <span class="brand-dot"></span>
+        <span>WiseForge Studio</span>
+      </a>
+      <nav class="topbar-nav" aria-label="Principal">
+        <a href="#hero">Hero</a>
+        <a href="#services">Servicios</a>
+        <a href="#ecosystem">Ecosistema</a>
+      </nav>
+      <a class="button ghost" href="#services">Explorar servicios</a>
+    </header>
 
-        <nav class="site-nav" aria-label="Principal">
-          <a href="#productos">Productos</a>
-          <a href="#capacidades">Capacidades</a>
-          <a href="#confianza">Confianza</a>
-          <a href="#metodo">Método</a>
-          <a href="#contacto">Contacto</a>
-        </nav>
-        <a class="button button-primary header-cta" href="#contacto">Hablar con WiseForge</a>
-      </header>
+    <main class="layout">
+      <section class="hero-shell" id="hero">
+        <div class="hero-card">
+          <div class="hero-copy">
+            <p class="eyebrow">WiseForge Studio</p>
+            <h1>
+              Sistemas digitales
+              <span class="line-break">para operaciones complejas</span>
+              <span class="cycle-wrap">
+                en
+                <span class="animated-cycle" aria-live="polite">
+                  <span class="word is-visible">producto SaaS</span>
+                  <span class="word">software operativo</span>
+                  <span class="word">automatizacion</span>
+                  <span class="word">plataformas internas</span>
+                </span>
+              </span>
+            </h1>
+            <p class="hero-text">
+              WiseForge Studio diseña y construye productos, plataformas internas y sistemas de automatizacion
+              para empresas que necesitan mas control, trazabilidad y continuidad en su operacion.
+            </p>
 
-      <main id="main-content">
-        <section id="inicio" class="hero section reveal">
-          <div class="hero-layout">
-            <div class="hero-copy">
-              <p class="eyebrow">WiseForge Studio</p>
-              <div class="hero-signal reveal">
-                <span class="hero-signal-line"></span>
-                <span>Studio de producto, automatización y software operativo</span>
-              </div>
-              <h1>Software serio para empresas que necesitan <span class="gradient-text">operar con más control</span>, menos fricción y mejor lectura.</h1>
-              <p class="hero-subtitle">
-                Diseñamos productos SaaS, plataformas internas y sistemas de automatización para empresas
-                que necesitan control, trazabilidad y una capa digital más seria para sostener su operación.
-              </p>
-
-              <div class="hero-actions">
-                <a class="button button-primary" href="#productos">Explorar productos</a>
-                <a class="button button-secondary" href="#contacto">Hablar con WiseForge</a>
-              </div>
-
-              <ul class="hero-points">
-                <li>Producto digital con foco operativo</li>
-                <li>Automatización por consultoría</li>
-                <li>Plataformas internas y back office</li>
-              </ul>
-
-              <div class="hero-strip reveal">
-                <div class="hero-strip-card">
-                  <span>Productos</span>
-                  <strong>AssetMaster · GanaMaxcol</strong>
-                </div>
-                <div class="hero-strip-card">
-                  <span>Capacidad</span>
-                  <strong>SaaS · ERP · IA aplicada · automatización</strong>
-                </div>
-                <div class="hero-strip-card">
-                  <span>Resultado</span>
-                  <strong>Operaciones más legibles, medibles y escalables</strong>
-                </div>
-              </div>
+            <div class="hero-actions">
+              <a class="button primary" href="#services">Ver servicios</a>
+              <a class="button secondary" href="#ecosystem">Ver ecosistema</a>
             </div>
 
-            <aside class="hero-aside reveal">
-              <div class="hero-stage">
-                <div class="hero-stage-head">
-                  <span class="card-label">Command Layer</span>
-                  <strong>WiseForge convierte fricción operativa en una capa digital gobernable.</strong>
-                  <p>No diseñamos piezas sueltas. Unimos estructura, interfaz y lógica para que la operación gane continuidad.</p>
-                </div>
-
-                <div class="hero-grid">
-                  <article class="hero-panel hero-panel-primary reveal">
-                    <span>Modo de trabajo</span>
-                    <strong>De discovery a sistema en producción</strong>
-                    <p>Leemos la fricción, priorizamos el núcleo y construimos una base lista para evolucionar.</p>
-                  </article>
-
-                  <article class="hero-panel reveal">
-                    <span>Enfoque</span>
-                    <strong>B2B operativo</strong>
-                    <p>Diseño de producto con criterio enterprise y visión de sistema.</p>
-                  </article>
-
-                  <article class="hero-panel reveal">
-                    <span>Stack de valor</span>
-                    <strong>SaaS + automatización</strong>
-                    <p>Producto propio, consultoría técnica e integración de procesos.</p>
-                  </article>
-                </div>
-
-                <div class="hero-stage-footer reveal">
-                  <div class="hero-chip">Trazabilidad</div>
-                  <div class="hero-chip">Control documental</div>
-                  <div class="hero-chip">Flujos internos</div>
-                  <div class="hero-chip">Continuidad operativa</div>
-                </div>
-              </div>
-            </aside>
-          </div>
-        </section>
-
-        <section class="logo-band reveal" aria-label="Línea de productos del estudio">
-          <div class="logo-band-intro">
-            <span class="card-label">Ecosistema WiseForge</span>
-            <strong>Un studio, dos productos en operación y una misma lógica de sistema.</strong>
-            <p>WiseForge Studio diseña, construye y evoluciona software con foco operativo, identidad clara y continuidad real.</p>
-          </div>
-
-          <article class="logo-band-item logo-band-item-primary">
-            <div class="logo-band-copy">
-              <span>Studio</span>
-              <strong>WiseForge Studio</strong>
-              <p>Producto, automatización y software operativo para organizaciones que necesitan estructura.</p>
-            </div>
-            <img src="/logo-wfs.png" alt="WiseForge Studio" width="46" height="46" loading="lazy">
-          </article>
-
-          <article class="logo-band-item">
-            <div class="logo-band-copy">
-              <span>Producto</span>
-              <strong>AssetMaster</strong>
-              <p>ERP documental y operativo para control, activos, evidencia y trazabilidad.</p>
-            </div>
-            <img class="logo-band-mark" src="/assetmaster-logo.svg" alt="AssetMaster" width="150" height="44" loading="lazy">
-          </article>
-
-          <article class="logo-band-item">
-            <div class="logo-band-copy">
-              <span>Producto</span>
-              <strong>GanaMaxcol</strong>
-              <p>Software vertical para operación ganadera, seguimiento de campo y continuidad diaria.</p>
-            </div>
-            <img class="logo-band-mark logo-band-mark-ganamax" src="/ganamaxcol-logo.svg" alt="GanaMaxcol" width="176" height="56" loading="lazy">
-          </article>
-        </section>
-
-        <section id="capacidades" class="section reveal">
-          <div class="section-hero">
-            <div class="section-heading">
-              <p class="eyebrow">Capacidades</p>
-              <h2>Qué hacemos cuando una empresa necesita otra capa digital, no otro parche.</h2>
-              <p>
-                La propuesta de WiseForge Studio combina diseño de producto, ingeniería, experiencia operativa
-                y automatización para crear sistemas que se sostienen en producción.
-              </p>
-            </div>
-            <figure class="section-illustration illustration-gallery reveal" data-gallery-kind="systems" data-gallery-offset="0">
-              <div class="gallery-stage">
-                <span class="gallery-orbit orbit-a" aria-hidden="true"></span>
-                <span class="gallery-orbit orbit-b" aria-hidden="true"></span>
-                <img
-                  class="gallery-image"
-                  src="/studio-system-illustration.svg"
-                  alt="Ilustración de WiseForge Studio desarrollando sistemas digitales"
-                >
-              </div>
-              <figcaption class="gallery-meta" aria-hidden="true">
-                <div class="gallery-copy">
-                  <span class="gallery-kicker">Galería viva</span>
-                  <strong class="gallery-title">Escena operativa</strong>
-                  <span class="gallery-summary">WiseForge Studio diseña capas digitales que conectan personas, flujos y decisiones.</span>
-                </div>
-                <div class="gallery-status">
-                  <div class="gallery-rail"></div>
-                  <span class="gallery-counter">01 / 20</span>
-                </div>
-              </figcaption>
-            </figure>
-          </div>
-
-          <div class="capability-grid">
-            <article class="capability-card reveal">
-              <span class="capability-kicker">Producto</span>
-              <h3>Productos SaaS</h3>
-              <p>Diseñamos productos con propuesta clara, identidad propia y arquitectura lista para crecer con el negocio.</p>
-            </article>
-            <article class="capability-card reveal">
-              <span class="capability-kicker">Operación</span>
-              <h3>Software operativo</h3>
-              <p>Construimos herramientas que ordenan compras, control, inventario, seguimiento y lectura ejecutiva.</p>
-            </article>
-            <article class="capability-card reveal">
-              <span class="capability-kicker">Consultoría</span>
-              <h3>Automatización</h3>
-              <p>Definimos qué conviene resolver con flujos, integraciones, producto o IA aplicada con criterio operativo.</p>
-            </article>
-            <article class="capability-card reveal">
-              <span class="capability-kicker">Estructura</span>
-              <h3>Plataformas internas</h3>
-              <p>Sistemas propios para back office, coordinación entre áreas y una visión más clara del estado del trabajo.</p>
-            </article>
-          </div>
-        </section>
-
-        <section id="productos" class="section reveal">
-          <div class="section-heading">
-            <p class="eyebrow">Productos</p>
-            <h2>Dos sistemas que muestran cómo convertimos complejidad operativa en producto usable.</h2>
-            <p>AssetMaster y GanaMaxcol representan dos líneas claras del studio: control operativo enterprise y software vertical especializado.</p>
-          </div>
-
-          <article class="product-module reveal">
-            <div class="product-copy">
-              <div class="product-brand">
-                <img src="/assetmaster-logo.svg" alt="Logo de AssetMaster">
-              </div>
-              <h3>AssetMaster</h3>
-              <p class="product-summary">
-                ERP documental y operativo para compras, aprobaciones, activos y evidencia.
-              </p>
-              <ul class="product-points">
-                <li>Flujos de aprobación configurables</li>
-                <li>Expediente documental centralizado</li>
-                <li>Control de activos y trazabilidad</li>
-                <li>Base orientada a contextos enterprise</li>
-              </ul>
-
-              <div class="product-facts">
-                <div class="fact-card reveal">
-                  <span>Tipo</span>
-                  <strong>ERP documental</strong>
-                  <p>Diseñado para organizaciones que necesitan estructura, evidencia y continuidad.</p>
-                </div>
-                <div class="fact-card reveal">
-                  <span>Fortaleza</span>
-                  <strong>Control + trazabilidad</strong>
-                  <p>Combina lectura ejecutiva, seguimiento operativo y soporte documental.</p>
-                </div>
-              </div>
-
-              <div class="product-actions">
-                <a class="button button-primary" href="https://assetwise-hub.vercel.app" target="_blank" rel="noopener noreferrer">Ver demo</a>
-                <a class="button button-secondary" href="#contacto">Solicitar acceso</a>
-              </div>
+            <div class="hero-tags">
+              <span>Producto digital</span>
+              <span>Automatizacion</span>
+              <span>Plataformas internas</span>
+              <span>Continuidad operativa</span>
             </div>
 
-            <div class="product-visual">
-              <div class="screen-mosaic">
-                <figure class="screen-card screen-window assetmaster-window a reveal" data-product="assetmaster" data-screen-title="Aprobaciones y control" data-screen-copy="Vista ejecutiva para validar solicitudes, documentos y estado del flujo operativo.">
-                  <span class="screen-label">Aprobaciones</span>
-                  <div class="screen-fill" aria-hidden="true"></div>
-                </figure>
-                <figure class="screen-card screen-window assetmaster-window b reveal" data-product="assetmaster" data-screen-title="Expediente y evidencia" data-screen-copy="Relación entre documentos, soportes y continuidad operativa del activo.">
-                  <span class="screen-label">Expediente</span>
-                  <div class="screen-fill" aria-hidden="true"></div>
-                </figure>
-                <figure class="screen-card screen-window assetmaster-window c reveal" data-product="assetmaster" data-screen-title="Operación documental" data-screen-copy="Superficie pensada para trabajar estructura, control y trazabilidad interna.">
-                  <span class="screen-label">Documentos</span>
-                  <div class="screen-fill" aria-hidden="true"></div>
-                </figure>
-              </div>
-              <div class="screen-note reveal" id="assetmaster-note">
-                <span>Vista activa</span>
-                <strong id="assetmaster-note-title">Rigor, estructura y experiencia pensada para contextos de control.</strong>
-                <p id="assetmaster-note-copy">La composición comunica secuencia operativa, visibilidad y soporte documental consistente.</p>
-              </div>
-            </div>
-          </article>
-
-          <article class="product-module reverse reveal">
-            <div class="product-copy">
-              <div class="product-brand">
-                <img src="/ganamaxcol-logo.svg" alt="Logo de GanaMaxcol">
-              </div>
-              <h3>GanaMaxcol</h3>
-              <p class="product-summary">
-                Producto especializado para gestión ganadera multiempresa y continuidad operativa en campo.
-              </p>
-              <ul class="product-points">
-                <li>Operación vertical con identidad clara</li>
-                <li>Experiencia orientada a lectura rápida</li>
-                <li>Base para trazabilidad y seguimiento</li>
-                <li>Crecimiento modular por operación</li>
-              </ul>
-
-              <div class="product-facts">
-                <div class="fact-card reveal">
-                  <span>Tipo</span>
-                  <strong>Vertical ganadero</strong>
-                  <p>Software pensado para un mercado específico con contexto operativo real.</p>
+            <div class="brand-row">
+              <article class="brand-chip brand-chip-main">
+                <img src="/logo-wfs.png" alt="WiseForge Studio" width="40" height="40">
+                <div>
+                  <span>Studio</span>
+                  <strong>WiseForge</strong>
                 </div>
-                <div class="fact-card reveal">
-                  <span>Fortaleza</span>
-                  <strong>Continuidad de campo</strong>
-                  <p>Une visión de producto, claridad de uso y operación cotidiana.</p>
-                </div>
-              </div>
-
-              <div class="product-actions">
-                <a class="button button-primary" href="https://ganamaxcol.vercel.app" target="_blank" rel="noopener noreferrer">Abrir app</a>
-                <a class="button button-secondary" href="#contacto">Solicitar demo</a>
-              </div>
-            </div>
-
-            <div class="product-visual">
-              <div class="screen-mosaic">
-                <figure class="screen-card screen-window ganamax-window a reveal" data-product="ganamax" data-screen-title="Visión de plataforma" data-screen-copy="Pantalla de entrada para explicar valor, acceso y estructura de producto.">
-                  <span class="screen-label">Visión</span>
-                  <div class="screen-fill" aria-hidden="true"></div>
-                </figure>
-                <figure class="screen-card screen-window ganamax-window b reveal" data-product="ganamax" data-screen-title="Adopción y claridad" data-screen-copy="Lectura comercial y funcional para explicar valor de manera inmediata.">
-                  <span class="screen-label">Adopción</span>
-                  <div class="screen-fill" aria-hidden="true"></div>
-                </figure>
-                <figure class="screen-card screen-window ganamax-window c reveal" data-product="ganamax" data-screen-title="Operación cotidiana" data-screen-copy="Producto cercano al trabajo diario, al contexto de finca y al seguimiento continuo.">
-                  <span class="screen-label">Campo</span>
-                  <div class="screen-fill" aria-hidden="true"></div>
-                </figure>
-              </div>
-              <div class="screen-note reveal" id="ganamax-note">
-                <span>Vista activa</span>
-                <strong id="ganamax-note-title">Diseño vertical, foco de mercado y claridad para operación cotidiana.</strong>
-                <p id="ganamax-note-copy">El sistema se percibe especializado, usable y preparado para crecer por módulos.</p>
-              </div>
-            </div>
-          </article>
-        </section>
-
-        <section id="confianza" class="section reveal">
-          <div class="section-hero">
-            <div class="section-heading">
-              <p class="eyebrow">Confianza</p>
-              <h2>Cómo ofrecemos el valor: claridad, estructura y una propuesta seria para decisiones de negocio.</h2>
-            </div>
-            <figure class="section-illustration illustration-gallery compact reveal" data-gallery-kind="systems" data-gallery-offset="10">
-              <div class="gallery-stage">
-                <span class="gallery-orbit orbit-a" aria-hidden="true"></span>
-                <span class="gallery-orbit orbit-b" aria-hidden="true"></span>
-                <img
-                  class="gallery-image"
-                  src="/studio-system-illustration.svg"
-                  alt="Ilustración de sistemas, flujo y equipo"
-                >
-              </div>
-              <figcaption class="gallery-meta" aria-hidden="true">
-                <div class="gallery-copy">
-                  <span class="gallery-kicker">Galería viva</span>
-                  <strong class="gallery-title">Escena operativa</strong>
-                  <span class="gallery-summary">Nuestra forma de ofrecer software parte de orden, lectura y estructura confiable.</span>
-                </div>
-                <div class="gallery-status">
-                  <div class="gallery-rail"></div>
-                  <span class="gallery-counter">01 / 20</span>
-                </div>
-              </figcaption>
-            </figure>
-          </div>
-
-          <div class="trust-grid">
-            <article class="trust-card reveal">
-              <span class="trust-kicker">Criterio</span>
-              <h3>Producto con criterio</h3>
-              <p>No diseñamos interfaces aisladas. Diseñamos sistemas con narrativa, jerarquía y continuidad.</p>
-            </article>
-            <article class="trust-card reveal">
-              <span class="trust-kicker">Entrega</span>
-              <h3>Implementación real</h3>
-              <p>Trabajamos desde discovery hasta construcción y evolución, no solo hasta el prototipo.</p>
-            </article>
-            <article class="trust-card reveal">
-              <span class="trust-kicker">Prioridad</span>
-              <h3>Operación primero</h3>
-              <p>La lógica de negocio, la trazabilidad y la lectura de estado pesan más que el efecto visual.</p>
-            </article>
-          </div>
-        </section>
-
-        <section id="metodo" class="section reveal">
-          <div class="method-layout">
-            <div class="section-heading method-heading">
-              <p class="eyebrow">Método</p>
-              <h2>Una secuencia simple: entender, estructurar, construir y desplegar.</h2>
-              <p>Trabajamos con una lógica clara: leer la fricción, traducirla en sistema y convertir esa definición en software usable.</p>
-
-              <div class="method-insights reveal">
-                <div class="method-insight-card">
-                  <span>Lo que evitamos</span>
-                  <strong>Construir demasiado pronto o automatizar sin estructura.</strong>
-                </div>
-                <div class="method-insight-card">
-                  <span>Lo que priorizamos</span>
-                  <strong>Claridad operativa, alcance correcto y una base que sí pueda crecer.</strong>
-                </div>
-              </div>
-
-              <div class="method-strip reveal">
-                <div class="method-strip-item">
-                  <span>Entrada</span>
-                  <strong>Problema operativo real</strong>
-                </div>
-                <div class="method-strip-item">
-                  <span>Proceso</span>
-                  <strong>Lectura, estructura y construcción</strong>
-                </div>
-                <div class="method-strip-item">
-                  <span>Salida</span>
-                  <strong>Sistema usable y listo para evolucionar</strong>
-                </div>
-              </div>
-            </div>
-
-            <div class="method-visual-stack">
-              <figure class="section-illustration illustration-gallery compact mini reveal method-gallery" data-gallery-kind="method" data-gallery-offset="0">
-                <div class="gallery-stage">
-                  <span class="gallery-orbit orbit-a" aria-hidden="true"></span>
-                  <span class="gallery-orbit orbit-b" aria-hidden="true"></span>
-                  <img
-                    class="gallery-image"
-                    src="/studio-system-illustration.svg"
-                    alt="Ilustración de método, orquestación y construcción de sistemas"
-                  >
-                </div>
-                <figcaption class="gallery-meta" aria-hidden="true">
-                  <div class="gallery-copy">
-                    <span class="gallery-kicker">Método vivo</span>
-                    <strong class="gallery-title">Secuencia de entrega</strong>
-                    <span class="gallery-summary">Cada etapa traduce complejidad en una decisión concreta de producto, sistema o implementación.</span>
-                  </div>
-                  <div class="gallery-status">
-                    <div class="gallery-rail"></div>
-                    <span class="gallery-counter">01 / 20</span>
-                  </div>
-                </figcaption>
-              </figure>
-
-              <figure class="section-illustration illustration-gallery compact mini portrait reveal method-vertical-gallery" data-gallery-kind="methodVertical" data-gallery-offset="0">
-                <div class="gallery-stage">
-                  <span class="gallery-orbit orbit-a" aria-hidden="true"></span>
-                  <span class="gallery-orbit orbit-b" aria-hidden="true"></span>
-                  <img
-                    class="gallery-image"
-                    src="/studio-system-illustration.svg"
-                    alt="Galería vertical con insights del método de WiseForge Studio"
-                  >
-                </div>
-                <figcaption class="gallery-meta" aria-hidden="true">
-                  <div class="gallery-copy">
-                    <span class="gallery-kicker">Método en detalle</span>
-                    <strong class="gallery-title">Señal operativa</strong>
-                    <span class="gallery-summary">Cada tarjeta resume una señal, decisión o entregable que sí forma parte de una intervención seria.</span>
-                  </div>
-                  <div class="gallery-status">
-                    <div class="gallery-rail"></div>
-                    <span class="gallery-counter">01 / 20</span>
-                  </div>
-                </figcaption>
-              </figure>
+              </article>
+              <article class="brand-chip">
+                <img src="/assetmaster-logo.svg" alt="AssetMaster" width="118" height="34">
+              </article>
+              <article class="brand-chip">
+                <img src="/ganamaxcol-logo.svg" alt="GanaMaxcol" width="132" height="40">
+              </article>
             </div>
           </div>
 
-          <div class="method-grid">
-            <article class="method-card reveal">
-              <span>01</span>
-              <h3>Discovery</h3>
-              <p>Leemos fricción, actores, repeticiones y costo real del estado actual.</p>
-            </article>
-            <article class="method-card reveal">
-              <span>02</span>
-              <h3>Sistema</h3>
-              <p>Definimos estructura, experiencia, módulos y jerarquías con criterio de producto.</p>
-            </article>
-            <article class="method-card reveal">
-              <span>03</span>
-              <h3>Construcción</h3>
-              <p>Convertimos la definición en software usable, coherente y listo para producción.</p>
-            </article>
-            <article class="method-card reveal">
-              <span>04</span>
-              <h3>Evolución</h3>
-              <p>El sistema crece con medición y uso real, no con intuición vacía.</p>
-            </article>
-          </div>
-        </section>
-
-        <section id="contacto" class="section cta-section reveal">
-          <div class="cta-card contact-shell">
-            <div class="contact-copy">
-              <p class="eyebrow">Contacto</p>
-              <h2>Cuéntanos qué parte de tu operación necesita una capa digital más seria.</h2>
-              <p>
-                Si ya hay procesos débiles, demasiada fricción, poca trazabilidad o herramientas que no están
-                sosteniendo el crecimiento, este es el punto para iniciar una conversación con WiseForge Studio.
-              </p>
-
-              <div class="contact-points">
-                <div class="contact-point reveal">
-                  <span>Qué puedes plantear</span>
-                  <strong>Software interno, ERP, automatización, IA aplicada o producto SaaS.</strong>
-                </div>
-                <div class="contact-point reveal">
-                  <span>Qué evaluamos</span>
-                  <strong>Fricción, actores, estructura operativa, oportunidades y prioridad real.</strong>
-                </div>
-                <div class="contact-point reveal">
-                  <span>Qué recibes</span>
-                  <strong>Una lectura inicial seria para decidir si hace sentido intervenir y cómo.</strong>
-                </div>
+          <div class="hero-stage">
+            <div class="spotlight-beam spotlight-a" aria-hidden="true"></div>
+            <div class="spotlight-beam spotlight-b" aria-hidden="true"></div>
+            <div class="stage-panel">
+              <div class="stage-badge">SplineScene</div>
+              <div class="stage-meta">
+                <span>Studio ecosystem</span>
+                <strong>Producto, software y automatizacion en una sola capa</strong>
+              </div>
+              <div class="spline-shell">
+                <spline-viewer
+                  url="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
+                  loading-anim-type="spinner-small-dark"
+                ></spline-viewer>
               </div>
             </div>
-
-            <form class="contact-form reveal" id="contact-form" action="/api/contact" method="POST">
-              <div class="contact-form-head">
-                <span class="card-label">Formulario de contacto</span>
-                <strong>Escríbenos por correo con el contexto correcto.</strong>
-                <p>Entre más claro llegue el caso, mejor podemos responder con criterio.</p>
-              </div>
-
-              <label class="field">
-                <span>Nombre</span>
-                <input type="text" name="nombre" placeholder="Tu nombre" required>
-              </label>
-
-              <label class="field">
-                <span>Empresa</span>
-                <input type="text" name="empresa" placeholder="Nombre de la empresa" required>
-              </label>
-
-              <label class="field">
-                <span>Correo</span>
-                <input type="email" name="correo" placeholder="nombre@empresa.com" required>
-              </label>
-
-              <label class="field">
-                <span>Tipo de necesidad</span>
-                <select name="tipo_necesidad" required>
-                  <option value="">Selecciona una opción</option>
-                  <option>Software operativo</option>
-                  <option>Automatización por consultoría</option>
-                  <option>Producto SaaS</option>
-                  <option>Plataforma interna</option>
-                  <option>Exploración inicial</option>
-                </select>
-              </label>
-
-              <label class="field field-full">
-                <span>Contexto</span>
-                <textarea name="contexto" rows="6" placeholder="Describe brevemente la operación, el problema actual y qué te gustaría resolver." required></textarea>
-              </label>
-
-              <div class="contact-form-footer">
-                <p id="form-status"></p>
-                <button class="button button-primary" type="submit" id="form-submit-btn">Enviar mensaje</button>
-              </div>
-            </form>
-          </div>
-        </section>
-      </main>
-
-      <footer class="site-footer">
-        <div class="footer-brand">
-          <img src="/logo-wfs.png" alt="WiseForge Studio" width="32" height="32">
-          <div>
-            <strong>WiseForge Studio</strong>
-            <small>Software operativo para empresas en crecimiento</small>
           </div>
         </div>
-        <nav class="footer-nav" aria-label="Footer">
-          <a href="#productos">Productos</a>
-          <a href="#capacidades">Capacidades</a>
-          <a href="#metodo">Método</a>
-          <a href="#contacto">Contacto</a>
-        </nav>
-        <div class="footer-contact">
-          <a href="mailto:contacto@wiseforgestudio.com">contacto@wiseforgestudio.com</a>
-          <p>&copy; <span id="year"></span> WiseForge Studio.</p>
+      </section>
+
+      <section class="menu-section" id="services">
+        <div class="section-heading">
+          <p class="eyebrow">Servicios</p>
+          <h2>Lo que ofrecemos cuando una empresa necesita una capa digital mas seria</h2>
+          <p>
+            El estudio combina diseño de producto, ingenieria y criterio operativo para resolver friccion real
+            con software usable y con direccion clara.
+          </p>
         </div>
-      </footer>
-    </div>
+        <ul class="gradient-menu">
+          <li style="--from:#8cf68a;--to:#00d0ff;"><span class="menu-icon">P</span><span class="menu-label">Producto SaaS</span></li>
+          <li style="--from:#ffd166;--to:#ff6b6b;"><span class="menu-icon">O</span><span class="menu-label">Software operativo</span></li>
+          <li style="--from:#ff8ad8;--to:#a955ff;"><span class="menu-icon">A</span><span class="menu-label">Automatizacion</span></li>
+          <li style="--from:#7ef7c9;--to:#22a3ff;"><span class="menu-icon">I</span><span class="menu-label">Plataformas internas</span></li>
+          <li style="--from:#ffffff;--to:#90a8ff;"><span class="menu-icon">C</span><span class="menu-label">Consultoria tecnica</span></li>
+        </ul>
+        <div class="service-grid">
+          <article class="service-card">
+            <span>Producto</span>
+            <strong>Productos SaaS con identidad y estructura</strong>
+            <p>Diseñamos software que nace con narrativa clara, lectura ejecutiva y una base lista para crecer.</p>
+          </article>
+          <article class="service-card">
+            <span>Operacion</span>
+            <strong>Sistemas para control, seguimiento y trazabilidad</strong>
+            <p>Construimos herramientas internas para ordenar compras, activos, documentos, flujos y estado operativo.</p>
+          </article>
+          <article class="service-card">
+            <span>Automatizacion</span>
+            <strong>Flujos, integraciones e IA aplicada con criterio</strong>
+            <p>Evaluamos donde automatizar, que convertir en producto y que debe seguir bajo control humano.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="scroll-demo" id="ecosystem">
+        <div class="section-heading narrow">
+          <p class="eyebrow">Ecosistema</p>
+          <h2>WiseForge opera como studio y tambien como linea de productos reales</h2>
+          <p>
+            AssetMaster y GanaMaxcol muestran dos direcciones claras del estudio: control operativo enterprise
+            y software vertical especializado.
+          </p>
+        </div>
+
+        <div class="scroll-stage">
+          <div class="scroll-title">
+            <span>Productos y studio</span>
+            <strong>AssetMaster, GanaMaxcol y servicios de WiseForge</strong>
+          </div>
+          <div class="scroll-card">
+            <div class="scroll-surface">
+              <div class="surface-grid"></div>
+              <div class="surface-panel panel-left product-panel">
+                <img src="/assetmaster-logo.svg" alt="AssetMaster" width="132" height="38">
+                <span>ERP documental</span>
+                <strong>Control, evidencia y trazabilidad</strong>
+              </div>
+              <div class="surface-panel panel-right product-panel">
+                <img src="/ganamaxcol-logo.svg" alt="GanaMaxcol" width="146" height="42">
+                <span>Vertical especializado</span>
+                <strong>Operacion ganadera y continuidad diaria</strong>
+              </div>
+              <div class="surface-panel panel-bottom studio-panel">
+                <img src="/logo-wfs-primary.svg" alt="WiseForge Studio" width="170" height="44">
+                <span>Studio services</span>
+                <strong>Producto digital, automatizacion y software operativo para empresas que necesitan una base mas seria.</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
 
     <script src="/app.js"></script>
   </body>

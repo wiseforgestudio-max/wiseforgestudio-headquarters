@@ -1,16 +1,17 @@
 import type { Metadata } from 'next'
+
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'WiseForge Studio — Software operativo, automatización y productos SaaS',
+  title: 'WiseForge Studio Headquarters | Sistema operativo multiagente',
   description:
-    'Studio de producto, automatización y software operativo. Diseñamos soluciones para empresas que necesitan control, trazabilidad y una capa digital más seria.',
-  keywords: ['software operativo', 'automatización', 'SaaS', 'Colombia', 'desarrollo de software'],
+    'Headquarters de WiseForge Studio para coordinar agentes de IA con gobierno humano, auditoria, planes, aprobaciones y despliegue trazable.',
+  keywords: ['multiagente', 'AI headquarters', 'software operativo', 'automatizacion', 'WiseForge Studio'],
   openGraph: {
-    title: 'WiseForge Studio',
-    description: 'Software operativo, automatización y productos SaaS',
+    title: 'WiseForge Studio Headquarters',
+    description: 'Gobierno, control y trazabilidad para organizaciones multiagente.',
     url: 'https://wiseforgestudio-hq.vercel.app',
-    siteName: 'WiseForge Studio',
+    siteName: 'WiseForge Studio Headquarters',
     locale: 'es_CO',
     type: 'website',
   },
@@ -23,7 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap"
           rel="stylesheet"
         />
       </head>
